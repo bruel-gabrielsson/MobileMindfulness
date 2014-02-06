@@ -8,6 +8,8 @@ var http = require('http');
 var path = require('path');
 var handlebars = require('express3-handlebars')
 
+handlebars.partialsDir = "views/partials/";
+
 var index = require('./routes/index');
 var start = require('./routes/start');
 var active = require('./routes/active');
