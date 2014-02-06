@@ -12,7 +12,7 @@ function initializePage() {
 	console.log("Javascript connected!");
 
 	$("#start-start-button").on("click", function(e) {
-
+		console.log("CLICK START");
 		$("#start-page").css("display", "none");
 		$("#active-page").css("display", "inline");
 	});

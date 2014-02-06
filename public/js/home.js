@@ -6,6 +6,7 @@ $(document).ready(function() {
 /*
  * Function that is called when the document is ready.
  */
+/*
 function initializePage() {
 	$("#introBox").hide();
 	$("#preCanvas").click(showInstructions);
@@ -23,3 +24,4 @@ function hideInstructions() {
 	$("#introBox").hide();
 	$("#preCanvas").show();
 }
+*/

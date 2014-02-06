@@ -11,9 +11,6 @@ var handlebars = require('express3-handlebars')
 handlebars.partialsDir = "views/partials/";
 
 var index = require('./routes/index');
-var start = require('./routes/start');
-var active = require('./routes/active');
-var results = require('./routes/results');
 // Example route
 // var user = require('./routes/user');
 
@@ -41,9 +38,7 @@ if ('development' == app.get('env')) {
 
 // Add routes here
 app.get('/', index.view);
-app.get('/start', start.view);
-app.get('/active', active.view);
-app.get('/results', results.view);
+
 // Example route
 // app.get('/users', user.list);
 
