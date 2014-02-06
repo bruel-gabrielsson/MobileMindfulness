@@ -12,4 +12,4 @@ Heroku Website Address:
 
 http://mobilemindfulness.herokuapp.com/
 
-Lastly, we need to remember GIT PULL, before GIT PUSH
+Lastly, we need to remember GIT PULL ORIGIN MASTER, before GIT PUSH
