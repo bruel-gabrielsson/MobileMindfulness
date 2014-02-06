@@ -1,11 +1,11 @@
-<<<<<<< HEAD
-Lab 5
-====
 
-Lab 5: Putting it together
-=======
 MobileMindfulness
 =================
 
 You should be able to relax anywhere, anytime
->>>>>>> fef737ceb288fc7b4b77016fae15ec87de192aed
+
+INSTRUCTIONS:
+
+Should work by cloning the directory into your introHCI directory where you have your vagrant set up. This should work just as in the labs, without you having to fork the objects since I have added you as owners on github.
+
+
