@@ -1,0 +1,12 @@
+#active-page-square {
+	width: 85%;
+	height: 300px;
+	background-color: white;
+	border: 2px solid gray;
+}
+
+#active-page-feedback {
+	position: relative;
+	width: 100%;
+	overflow: auto;
+}
