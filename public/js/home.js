@@ -32,6 +32,20 @@ function initializePage() {
 		$("#start-page").css("display", "inline");
 	});
 
+	$("#start-help-button").on("click", function(e) {
+
+		$("#start-page").css("display", "none");
+		$("#help-page").css("display", "inline");
+	});
+
+	$("#help-start-button").on("click", function(e) {
+
+		$("#help-page").css("display", "none");
+		$("#active-page").css("display", "inline");
+	});
+
+	
+
 	initHomeScreen();
 
 }
