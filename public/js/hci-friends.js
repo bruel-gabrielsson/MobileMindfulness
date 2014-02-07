@@ -29,5 +29,7 @@ function initializePage() {
 		$("#start-page").css("display", "inline");
 	});
 
+	initHomeScreen();
+
 }
 
