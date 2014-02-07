@@ -1,0 +1,23 @@
+#results-page h3, h4 {
+}
+
+#results-graph-condensed img {
+	border: 1px solid lightgray;
+	height: 230px;
+	display: inline-block;
+}
+
+
+#results-graph {
+	display: inline-block;
+	width: 110%;
+	position: relative;
+	right: 20px;
+	overflow: auto;
+
+}
+
+#results-graph img {
+	width: 800px;
+	height: 150px;
+}

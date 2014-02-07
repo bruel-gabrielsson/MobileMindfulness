@@ -1,9 +1,9 @@
 
 .main-region {
-	height: 90%;
-	width: 90%;
-	min-height: 500px;
+	
+	height: 550px;
 	border: 2px solid lightgray;
+	overflow: hidden;
 }
 
 #introBox {
@@ -36,13 +36,6 @@
 
 #results-page {
 	display: none;
-}
-
-#results-graph {
-	display: inline-block;
-	width: 105%;
-	overflow: auto;
-
 }
 
 #introBox {
