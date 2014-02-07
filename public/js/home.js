@@ -26,6 +26,12 @@ function initializePage() {
 		$("#results-page").css("display", "inline");
 	});
 
+	$("#active-quit-button").on("click", function(e) {
+
+		$("#active-page").css("display", "none");
+		$("#start-page").css("display", "inline");
+	});
+
 	$("#results-home-button").on("click", function(e) {
 
 		$("#results-page").css("display", "none");
