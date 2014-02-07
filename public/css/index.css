@@ -1,8 +1,9 @@
+body {
+	background: black;
+	color: white;
+}
 
 .main-region {
-	
-	height: 550px;
-	border: 2px solid lightgray;
 	overflow: hidden;
 }
 
@@ -12,12 +13,14 @@
 
 .canvasBox {
 	background-color: black;
-	width: 100%;
-	height: 200px;
-	max-width: 100%;
-	border: 5px solid #000000;
 	margin-bottom: 5px;
+	width: 100%;
 }
+
+	.canvasBox h2 {
+		text-align: center;
+		padding-top: 40px;
+	}
 
 #bannerHead {
 	max-width: 100%;
@@ -27,22 +30,21 @@
 }
 
 #start-page {
-	display: inline;
+	display: block;
 }
 
-#active-page {
-	display: none;
-}
-
-#results-page {
+.content-page, #introBox {
 	display: none;
 }
 
 #introBox {
 	color: white;
-
 }
 
-#help-page {
-	display: none;
+.bottom-buttons {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 15px;
 }
