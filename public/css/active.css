@@ -1,23 +1,21 @@
 #active-page-square {
-	width: 90%;
-	height: 230px;
-	background-color: white;
-	border: 2px solid gray;
-	margin-left: auto;
-	margin-right: auto;
+	height: 200px;
+	background: #333;
 }
 
 #active-page-feedback {
 	position: relative;
 	width: 100%;
 	overflow: auto;
+	background: white;
 }
 
 #active-page-feedback img {
-	height: 200px;
+	height: 150px;
 	position: relative;
-	
-	border-right: 2px dotted black; 
-
+	border-right: 2px dotted black;
 }
 
+#active-page-feedback::-webkit-scrollbar { 
+    display: none; 
+}
