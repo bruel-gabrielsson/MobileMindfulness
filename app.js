@@ -16,9 +16,11 @@ var index = require('./routes/index');
 
 var app = express();
 
+/*
 var databaseUrl = "localhost:3000/db"; // "username:password@example.com/mydb"
 var collections = ["users", "data"]
 var db = require("mongojs").connect(databaseUrl, collections);
+*/
 
 // all environments
 app.set('port', process.env.PORT || 3000);
