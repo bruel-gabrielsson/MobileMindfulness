@@ -14,40 +14,42 @@ $(document).ready(function() {
 function initializePage() {
 	console.log("Javascript connected!");
 
+	var $contentPages = $('.content-page');
+
 	$("#start-start-button").on("click", function(e) {
 		console.log("CLICK START");
-		$("#start-page").css("display", "none");
-		$("#active-page").css("display", "inline");
+		$contentPages.hide();
+		$("#active-page").show();
 	});
 
 	$("#active-finish-button").on("click", function(e) {
-
-		$("#active-page").css("display", "none");
-		$("#results-page").css("display", "inline");
+		$contentPages.hide();
+		$("#results-page").show();
 	});
 
 	$("#active-quit-button").on("click", function(e) {
-
-		$("#active-page").css("display", "none");
-		$("#start-page").css("display", "inline");
+		$contentPages.hide();
+		$("#start-page").show();
 	});
 
 	$("#results-home-button").on("click", function(e) {
-
-		$("#results-page").css("display", "none");
-		$("#start-page").css("display", "inline");
+		$contentPages.hide();
+		$("#start-page").show();
 	});
 
 	$("#start-help-button").on("click", function(e) {
-
-		$("#start-page").css("display", "none");
-		$("#help-page").css("display", "inline");
+		$contentPages.hide();
+		$("#help-page").show();
 	});
 
 	$("#help-start-button").on("click", function(e) {
+		$contentPages.hide();
+		$("#active-page").show();
+	});
 
-		$("#help-page").css("display", "none");
-		$("#active-page").css("display", "inline");
+	$("#help-back-button").on("click", function(e) {
+		$contentPages.hide();
+		$("#start-page").show();
 	});
 
 	
@@ -58,19 +60,10 @@ function initializePage() {
 
  
 function initHomeScreen() {
-	$("#introBox").hide();
-	$("#preCanvas").click(showInstructions);
-	$("#introBox").click(hideInstructions);
-	console.log("Javascript connected!");
-}
-
-
-function showInstructions() {
-	$("#introBox").show();
-	$("#preCanvas").hide();
-}
-
-function hideInstructions() {
-	$("#introBox").hide();
-	$("#preCanvas").show();
+	var $instructions = $('#introBox'),
+		$startImage = $('#bannerHead');
+	$("#preCanvas").click(function() {
+		$instructions.toggle();
+		$startImage.toggle();
+	});
 }

@@ -14,10 +14,13 @@
 	position: relative;
 	right: 20px;
 	overflow: auto;
-
 }
 
 #results-graph img {
 	width: 800px;
 	height: 120px;
+}
+
+#results-graph::-webkit-scrollbar { 
+    display: none; 
 }
