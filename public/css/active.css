@@ -20,10 +20,26 @@
     display: none; 
 }
 
+#breathInteraction {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
 #breathCanvas {
-	height: 70%;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 80px;
+	top: 0;
 }
 
 #breathGraph {
-	height: 30%;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 80px;
 }

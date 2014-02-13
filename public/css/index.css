@@ -3,8 +3,48 @@ body {
 	color: white;
 }
 
-.main-region {
+.page-content {
+	position: absolute;
+	top: 65px;
+	bottom: 125px;
+	left: 15px;
+	right: 15px;
 	overflow: hidden;
+}
+
+h2 {
+	padding: 0 15px;
+}
+
+.bottom-buttons {
+	position: fixed;
+	background: black;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 15px;
+}
+
+#start-page {
+	display: block;
+}
+
+.content-page, #introBox {
+	display: none;
+}
+
+
+
+/*
+
+.main-region {
+	overflow: auto;
+	position: absolute;
+	padding-bottom: 125px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 65px;
 }
 
 #introBox {
@@ -29,22 +69,8 @@ body {
 	margin-right: auto;
 }
 
-#start-page {
-	display: block;
-}
-
-.content-page, #introBox {
-	display: none;
-}
-
 #introBox {
 	color: white;
 }
 
-.bottom-buttons {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	padding: 15px;
-}
+*/
