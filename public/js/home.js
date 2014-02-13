@@ -18,9 +18,7 @@ function initializePage() {
 		color1 = [0,255,132];
 	var historyLimit = 15000, // Show the last 15 seconds in the graph
 		lineColor = [0,95,150],
-		lineWidth = 1;
-
-		lineColor = [0,0,0];
+		lineWidth = 2;
 	
 	var breathCanvas = new BreathCanvas();
 	var breathGraph = new BreathGraph();
