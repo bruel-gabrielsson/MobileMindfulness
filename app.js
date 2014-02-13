@@ -7,10 +7,12 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var handlebars = require('express3-handlebars');
+var passport = require('passport');
 
 handlebars.partialsDir = "views/partials/";
 
 var index = require('./routes/index');
+var login = require('./routes/login');
 // Example route
 // var user = require('./routes/user');
 
@@ -44,7 +46,11 @@ if ('development' == app.get('env')) {
 
 // Add routes here
 app.get('/', index.view);
+app.get('/login', login.view);
 
+// LOGIN
+app.post('/login', passport.authenticate('local', { successRedirect: '/',
+                                                    failureRedirect: '/login' }));
 // Example route
 // app.get('/users', user.list);
 
