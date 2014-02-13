@@ -19,3 +19,11 @@
 #active-page-feedback::-webkit-scrollbar { 
     display: none; 
 }
+
+#breathCanvas {
+	height: 70%;
+}
+
+#breathGraph {
+	height: 30%;
+}

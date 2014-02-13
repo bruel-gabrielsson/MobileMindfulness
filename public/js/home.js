@@ -14,45 +14,48 @@ $(document).ready(function() {
 function initializePage() {
 	console.log("Javascript connected!");
 
-	var $contentPages = $('.content-page');
-
-	$("#start-start-button").on("click", function(e) {
-		console.log("CLICK START");
-		$contentPages.hide();
-		$("#active-page").show();
+	var color0 = [0,95,150],
+		color1 = [0,255,132];
+	var historyLimit = 15000, // Show the last 15 seconds in the graph
+		lineColor = [0,95,150],
+		lineWidth = 3;
+	
+	var breathCanvas = new BreathCanvas();
+	var breathGraph = new BreathGraph();
+	
+	breathCanvas.init(color0, color1);
+	breathGraph.init(historyLimit,lineColor,lineWidth);
+	
+	breathCanvas.bind(function(y) {
+		breathGraph.appendData.call(breathGraph,y);
 	});
 
-	$("#active-finish-button").on("click", function(e) {
+	var $contentPages = $('.content-page');
+
+	$(".start-button").on("click", function(e) {
 		$contentPages.hide();
+		$("#active-page").show(0, function() {
+			breathCanvas.start.call(breathCanvas);
+			breathGraph.start.call(breathGraph);
+		});
+	});
+
+	$(".finish-button").on("click", function(e) {
+		$contentPages.hide();
+		breathCanvas.stop();
+		var data = breathGraph.stop();
 		$("#results-page").show();
 	});
 
-	$("#active-quit-button").on("click", function(e) {
+	$(".home-button, .quit-button, .back-button").on("click", function(e) {
 		$contentPages.hide();
 		$("#start-page").show();
 	});
 
-	$("#results-home-button").on("click", function(e) {
-		$contentPages.hide();
-		$("#start-page").show();
-	});
-
-	$("#start-help-button").on("click", function(e) {
+	$(".help-button").on("click", function(e) {
 		$contentPages.hide();
 		$("#help-page").show();
 	});
-
-	$("#help-start-button").on("click", function(e) {
-		$contentPages.hide();
-		$("#active-page").show();
-	});
-
-	$("#help-back-button").on("click", function(e) {
-		$contentPages.hide();
-		$("#start-page").show();
-	});
-
-	
 
 	initHomeScreen();
 
