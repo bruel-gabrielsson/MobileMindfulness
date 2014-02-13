@@ -17,30 +17,28 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">  
     <link rel="stylesheet" type="text/css" href="css/active.css">  
-    <link rel="stylesheet" type="text/css" href="css/results.css">  
+    <link rel="stylesheet" type="text/css" href="css/results.css">
+    <link rel="stylesheet" type="text/css" href="css/breathInteraction.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
 </head>
 
 <body>
-	<div class="container">
-		<h2>MobileMindfulness</h2>
-    <div class="main-region">
-      <div class="content-page" id="start-page">
-        {{> _start }}
-      </div>
-      <div class="content-page" id="active-page">
-        {{> _active }}
-      </div>
-      <div class="content-page" id="results-page">
-        {{> _results }}
-      </div>
-      <div class="content-page" id="help-page">
-        {{> _help }}
-      </div>
-    </div>
-		
-	</div>
+  <div class="content-page" id="start-page">
+    {{> _start }}
+  </div>
+  <div class="content-page" id="active-page">
+    {{> _active }}
+  </div>
+  <div class="content-page" id="results-page">
+    {{> _results }}
+  </div>
+  <div class="content-page" id="help-page">
+    {{> _help }}
+  </div>
 </body>
 
+<script src="js/breathCanvas.js"> </script>
+<script src="js/breathGraph.js"> </script>
 <script src="js/jquery-1.11.0.js"> </script>
 <script src="js/bootstrap.js"> </script>
 <script src="js/home.js"> </script>
