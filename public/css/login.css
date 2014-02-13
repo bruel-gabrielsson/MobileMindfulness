@@ -1,2 +1,10 @@
 .container .container {
 }
+
+.modal-content .modal-body {
+	color: black;
+}
+
+.login-button {
+	width: 100%;
+}

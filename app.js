@@ -45,8 +45,8 @@ if ('development' == app.get('env')) {
 }
 
 // Add routes here
-app.get('/', index.view);
-app.get('/login', login.view);
+app.get('/index', index.view);
+app.get('/', login.view);
 
 // LOGIN
 app.post('/login', passport.authenticate('local', { successRedirect: '/',
