@@ -24,9 +24,11 @@ function initializePage() {
 	
 	var breathCanvas = new BreathCanvas();
 	var breathGraph = new BreathGraph();
+	var breathResults = new BreathResults();
 	
 	breathCanvas.init(color0, color1);
 	breathGraph.init(historyLimit,lineColor,lineWidth);
+	breathResults.init(historyLimit*2,lineColor,lineWidth);
 	
 	breathCanvas.bind(function(y) {
 		breathGraph.appendData.call(breathGraph,y);
@@ -44,9 +46,10 @@ function initializePage() {
 
 	$(".finish-button").on("click", function(e) {
 		$contentPages.hide();
-		breathCanvas.stop();
-		var data = breathGraph.stop();
+		breathCanvas.stop.call(breathCanvas);
+		var data = breathGraph.stop.call(breathGraph);
 		$("#results-page").show();
+		breathResults.populate.call(breathResults,data);
 	});
 
 	$(".home-button, .quit-button, .back-button").on("click", function(e) {

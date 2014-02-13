@@ -81,11 +81,11 @@ BreathGraph.prototype.loop = function() {
 		for (var j = showDataLength-2; j >= 0; j--) {
 			point = showData[j];
 			ctx.lineTo(point.x*canvasWidth,(0.9 -point.y*0.8)*canvasHeight);
-			ctx.stroke();
 		}
 		if (showDataLength > 2) {
 			ctx.lineTo(canvasWidth,(0.9 -point.y*0.8)*canvasHeight);
-			ctx.stroke();
 		}
+		ctx.stroke();
+		ctx.closePath();
 	}
 };

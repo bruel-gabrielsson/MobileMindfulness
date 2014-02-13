@@ -1,26 +1,26 @@
-#results-page h3, h4 {
+#resultsGraph {
+	overflow-y: hidden;
+	overflow-x: auto;
+	background: white;
+	height: 80px;
 }
 
-#results-graph-condensed img {
-	border: 1px solid lightgray;
-	height: 230px;
-	display: inline-block;
-}
-
-
-#results-graph {
-	display: inline-block;
-	width: 110%;
-	position: relative;
-	right: 20px;
-	overflow: auto;
-}
-
-#results-graph img {
-	width: 800px;
-	height: 120px;
-}
-
-#results-graph::-webkit-scrollbar { 
+#resultsGraph::-webkit-scrollbar { 
     display: none; 
+}
+
+#condensedResultsGraph {
+	background: white;
+	height: 80px;
+	position: relative;
+}
+
+#condensedResultsGraph:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 50%;
+	border-right: 3px solid #777;
 }
