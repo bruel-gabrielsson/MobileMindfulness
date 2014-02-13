@@ -6,14 +6,16 @@ BreathResults.prototype.init = function(timeLimit, color, lineWidth) {
 	this.lineWidth = lineWidth;
 
 	var $fullGraphContainer = $('#resultsGraph');
-	this.$fullGraph = $('<canvas id="resultGraphCanvas">');
-	$fullGraphContainer.append(this.$fullGraph);
-	this.fullGraph = document.getElementById('resultGraphCanvas');
+	if ($fullGraphContainer.length) {
+		this.$fullGraph = $('<canvas id="resultGraphCanvas">');
+		$fullGraphContainer.append(this.$fullGraph);
+		this.fullGraph = document.getElementById('resultGraphCanvas');
 
-	var $condensedContainer = $('#condensedResultsGraph');
-	this.$condensed = $('<canvas id="condensedResultGraphCanvas">');
-	$condensedContainer.append(this.$condensed);
-	this.condensed = document.getElementById('condensedResultGraphCanvas');
+		var $condensedContainer = $('#condensedResultsGraph');
+		this.$condensed = $('<canvas id="condensedResultGraphCanvas">');
+		$condensedContainer.append(this.$condensed);
+		this.condensed = document.getElementById('condensedResultGraphCanvas');
+	}
 };
 
 BreathResults.prototype.populate = function(data) {

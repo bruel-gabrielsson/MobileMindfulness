@@ -6,12 +6,14 @@ BreathGraph.prototype.init = function(historyLimit, color, lineWidth) {
 	this.lineWidth = lineWidth;
 
 	var $container = $('#breathGraph');
-	this.$canvas = $('<canvas id="breathGraphCanvas">');
-	$container.append(this.$canvas);
-	
-	this.canvas = document.getElementById('breathGraphCanvas');
-	this.iv;
-	this.reset();
+	if ($container.length) {
+		this.$canvas = $('<canvas id="breathGraphCanvas">');
+		$container.append(this.$canvas);
+		
+		this.canvas = document.getElementById('breathGraphCanvas');
+		this.iv;
+		this.reset();
+	}
 };
 
 BreathGraph.prototype.reset = function() {
