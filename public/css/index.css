@@ -29,6 +29,10 @@ h2 {
 	display: block;
 }
 
+#help-page .page-content {
+	overflow-y: auto;
+}
+
 .content-page, #introBox {
 	display: none;
 }
