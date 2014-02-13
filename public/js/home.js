@@ -17,7 +17,8 @@ function initializePage() {
 	var color0 = [0,95,150],
 		color1 = [0,255,132];
 	var historyLimit = 15000, // Show the last 15 seconds in the graph
-		lineColor = [0,95,150],
+		activeLineColor = [255,255,255],
+		resultLineColor = [0,95,150],
 		lineWidth = 2;
 	
 	var breathCanvas = new BreathCanvas();
@@ -25,8 +26,8 @@ function initializePage() {
 	var breathResults = new BreathResults();
 	
 	breathCanvas.init(color0, color1);
-	breathGraph.init(historyLimit,lineColor,lineWidth);
-	breathResults.init(historyLimit*2,lineColor,lineWidth);
+	breathGraph.init(historyLimit,activeLineColor,lineWidth);
+	breathResults.init(historyLimit*2,resultLineColor,lineWidth);
 	
 	breathCanvas.bind(function(y) {
 		breathGraph.appendData.call(breathGraph,y);
