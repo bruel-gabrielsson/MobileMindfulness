@@ -7,6 +7,7 @@ BreathCanvas.prototype.init = function(color0, color1) {
 		this.callbacks = [];
 		this.$canvas = $('#breathCanvas');
 		this.$controller = $('#breathController');
+		this.hideThumb = true;
 
 		if (this.$canvas.length) {
 		
@@ -27,7 +28,7 @@ BreathCanvas.prototype.init = function(color0, color1) {
 					var t2 = new Date().getTime();
 					self.notify(y, t2-t);
 					t = t2;
-					if (self.initialized) self.$controller.addClass('active');
+					if (self.initialized && self.hideThumb) self.$controller.addClass('active');
 					self.initialized = true;
 					clearTimeout(to);
 					to = setTimeout(self.showThumb.bind(self), 3000);
@@ -41,8 +42,11 @@ BreathCanvas.prototype.init = function(color0, color1) {
 };
 
 BreathCanvas.prototype.reset = function() {
+	var self = this;
+	this.hideThumb = false;
 	this.$canvas.scrollTop(this.$canvas.height()/2);
 	this.showThumb();
+	setTimeout(function(){self.hideThumb = true;},0);
 };
 
 BreathCanvas.prototype.start = function() {
