@@ -19,14 +19,23 @@ var login = require('./routes/login');
 var app = express();
 
 
-//var databaseUrl = "mongodb://localhost:27017/mydb"; // "username:password@example.com/mydb"
-//var collections = ["users", "data"]
-//var db = require("mongojs").connect(databaseUrl, collections);
+var databaseUrl = "mongodb://localhost:27017/mydb"; // "username:password@example.com/mydb"
+var collections = ["users", "data"]
+var db = require("mongojs").connect(databaseUrl, collections);
 
-//var c = db.users.find();
-//c.forEach(function(err, doc){ 
-//	console.log(entry.name); 
-//});
+db.users.save({username: "Rickard", password: "pass"}, function(err, saved) {
+  if( err || !saved ) console.log("User not saved");
+  else console.log("User saved");
+});
+
+db.users.save({username: "Mathan", password: "pass"}, function(err, saved) {
+  if( err || !saved ) console.log("User not saved");
+  else console.log("User saved");
+});
+
+//console.log(db.users.find().count());
+
+//db.users.find().forEach( function(myDoc) { print( "user: " + myDoc.name ); } );
 
 // all environments
 app.set('port', process.env.PORT || 3000);
