@@ -41,8 +41,8 @@ BreathCanvas.prototype.init = function(color0, color1) {
 };
 
 BreathCanvas.prototype.reset = function() {
-	this.showThumb();
 	this.$canvas.scrollTop(this.$canvas.height()/2);
+	this.showThumb();
 };
 
 BreathCanvas.prototype.start = function() {
