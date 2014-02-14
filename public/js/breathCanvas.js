@@ -46,7 +46,7 @@ BreathCanvas.prototype.reset = function() {
 	this.hideThumb = false;
 	this.$canvas.scrollTop(this.$canvas.height()/2);
 	this.showThumb();
-	setTimeout(function(){self.hideThumb = true;},0);
+	setTimeout(function(){self.hideThumb = true;},10);
 };
 
 BreathCanvas.prototype.start = function() {
