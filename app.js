@@ -18,11 +18,15 @@ var login = require('./routes/login');
 
 var app = express();
 
-/*
-var databaseUrl = "localhost:3000/db"; // "username:password@example.com/mydb"
-var collections = ["users", "data"]
-var db = require("mongojs").connect(databaseUrl, collections);
-*/
+
+//var databaseUrl = "mongodb://localhost:27017/mydb"; // "username:password@example.com/mydb"
+//var collections = ["users", "data"]
+//var db = require("mongojs").connect(databaseUrl, collections);
+
+//var c = db.users.find();
+//c.forEach(function(err, doc){ 
+//	console.log(entry.name); 
+//});
 
 // all environments
 app.set('port', process.env.PORT || 3000);
