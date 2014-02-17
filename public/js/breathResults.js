@@ -23,17 +23,23 @@ BreathResults.prototype.populate = function(data) {
 		first = data[0],
 		last = data[length-1];
 
+	this.$condensed.css({
+		width: '100%',
+		height: '100%'
+	});
+
+	this.canvasWidth = this.$condensed.width();
+	this.canvasHeight = this.$condensed.height();
+	var canvasWidth = this.canvasWidth,
+		canvasHeight = this.canvasHeight;
+		
+	var ctx1 = this.fullGraph.getContext('2d');
+	var ctx2 = this.condensed.getContext('2d');
+	ctx1.clearRect(0,0,canvasWidth,canvasHeight);
+	ctx2.clearRect(0,0,canvasWidth,canvasHeight);
+
 	if (length > 1) {
 		// Fix canvas sizes
-		this.$condensed.css({
-			width: '100%',
-			height: '100%'
-		});
-
-		this.canvasWidth = this.$condensed.width();
-		this.canvasHeight = this.$condensed.height();
-		var canvasWidth = this.canvasWidth,
-			canvasHeight = this.canvasHeight;
 
 		this.condensed.width = canvasWidth;
 		this.condensed.height = canvasHeight;
@@ -54,15 +60,13 @@ BreathResults.prototype.populate = function(data) {
 			lineWidth = this.lineWidth;
 
 		// Draw full graph
-		var ctx = this.fullGraph.getContext('2d');
-		this.drawFullGraph(ctx, data, fullWidth, canvasHeight, timeSpan);
+		this.drawFullGraph(ctx1, data, fullWidth, canvasHeight, timeSpan);
 
 		// Draw condensed graph
-		ctx = this.condensed.getContext('2d');
 		if (ratio < 1) {
-			this.drawFullGraph(ctx, data, fullWidth, canvasHeight, timeSpan);
+			this.drawFullGraph(ctx2, data, fullWidth, canvasHeight, timeSpan);
 		} else {
-			this.drawCondensedGraph(ctx, data, ratio, fullWidth, canvasWidth, canvasHeight, timeSpan);
+			this.drawCondensedGraph(ctx2, data, ratio, fullWidth, canvasWidth, canvasHeight, timeSpan);
 		}
 	}
 };
@@ -71,7 +75,6 @@ BreathResults.prototype.drawFullGraph = function(ctx, data, fullWidth, canvasHei
 	var length = data.length;
 	ctx.strokeStyle = this.color;
 	ctx.lineWidth = this.lineWidth;
-	ctx.clearRect(0,0,fullWidth,canvasHeight);
 	ctx.beginPath();
 	var firstPoint = data[0],
 		t0 = firstPoint.t;
@@ -89,7 +92,6 @@ BreathResults.prototype.drawCondensedGraph = function(ctx, data, ratio, fullWidt
 	var length = data.length;
 	ctx.strokeStyle = this.color;
 	ctx.lineWidth = this.lineWidth;
-	ctx.clearRect(0,0,canvasWidth,canvasHeight);
 	// Draw first sequence
 	ctx.beginPath();
 	var firstPoint = data[0],
