@@ -3,6 +3,9 @@
 
 exports.view = function(req, res){
 	console.log("Index");
-	res.render('index');
+	res.render('index', {
+    title: 'MobileMindfulness',
+    username: req.session.username
+  });
 
 };

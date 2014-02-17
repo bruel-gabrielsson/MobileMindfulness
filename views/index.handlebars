@@ -24,7 +24,11 @@
 </head>
 
 <body>
-  <a id="logout-link" href="/"> Log Out </a>
+  {{#if username}}
+  <div id="logout-link">
+    <a href="#" >{{username}},</a> <a href="/user_logout">Log Out</a>
+  </div>
+  {{/if}}
   <div class="content-page" id="start-page">
     {{> _start }}
   </div>
