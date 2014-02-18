@@ -61,6 +61,11 @@ function initializePage() {
 		$("#help-page").show();
 	});
 
+	$(".save-data").on("click", function(e) {
+		console.log("saving data");
+		
+	});
+
 	initHomeScreen();
 
 }
