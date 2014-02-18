@@ -2,6 +2,7 @@ var BreathGraph = function() {};
 
 BreathGraph.prototype.init = function(historyLimit, color, lineWidth) {
 	this.historyLimit = historyLimit;
+	this.onStartCallbacks = [];
 	this.color = 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
 	this.lineWidth = lineWidth;
 
@@ -28,6 +29,10 @@ BreathGraph.prototype.reset = function() {
 	this.canvas.height = this.canvasHeight;
 };
 
+BreathGraph.prototype.onStart = function(callback) {
+	this.onStartCallbacks.push(callback);
+};
+
 BreathGraph.prototype.start = function() {
 	this.reset();
 	var self = this;
@@ -44,6 +49,11 @@ BreathGraph.prototype.appendData = function(y) {
 	if (this.data.length == 0) {
 		this.startTime = new Date().getTime();
 		this.iv = setInterval(self.loop.bind(self), 1);
+		var callbacks = this.onStartCallbacks;
+		var l = callbacks.length;
+		for (var i = 0; i < l; i++) {
+			callbacks[i]();
+		}
 	}
 	var t = new Date().getTime() - this.startTime;
 	this.data.push({t:t,y:y});
