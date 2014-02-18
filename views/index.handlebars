@@ -24,10 +24,16 @@
 </head>
 
 <body>
+
+  <!--TODO: Remove after testing.-->
+  <p id = "username" style="display:none">fake_user</p>
   {{#if username}}
-  <div id="logout-link">
-    <a href="#" >{{username}},</a> <a href="/user_logout">Log Out</a>
-  </div>
+    <!--Allows jquery to easily access username-->
+    <!--TODO: uncomment line below!-->
+<!--     <p id="username" style:"display:none">{{username}}</p>-->
+    <div id="logout-link">
+      <a href="#" >{{username}},</a> <a href="/user_logout">Log Out</a>
+    </div>
   {{/if}}
   <div class="content-page" id="start-page">
     {{> _start }}
@@ -41,11 +47,15 @@
   <div class="content-page" id="help-page">
     {{> _help }}
   </div>
+  <div class="content-page" id="progress-page">
+    {{> _progress }}
+  </div>
 </body>
 
 <script src="js/breathCanvas.js"> </script>
 <script src="js/breathGraph.js"> </script>
 <script src="js/breathResults.js"> </script>
+<script src="js/progress.js"> </script>
 <script src="js/jquery-1.11.0.js"> </script>
 <script src="js/bootstrap.js"> </script>
 <script src="js/home.js"> </script>

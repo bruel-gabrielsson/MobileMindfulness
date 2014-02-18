@@ -67,6 +67,28 @@ function initializePage() {
 	});
 
 	$(".progress-button").on("click", function(e) {
+		if ($("#username").length > 0) {
+			//TODO: Send AJAX request to database
+			//$.get("/URL_TO_DATABASE/" + $("#username").text()", populateTable);
+
+			//For now, call populateTable synchronously with toy data.
+			//I am assuming the history will arrive sorted by date.
+			var result = { 'breath_history': 
+				[
+					{'date': '02-01-2012 9:16 pm',
+			      	  'graph_data': 
+							[{'t': 0, 'y': .50}, {'t': 15, 'y': .70}, {'t': 20, 'y': .60}]},
+					{'date': '02-03-2012 2:03 pm',
+					  'graph_data':
+							[{'t': 0, 'y': .20}, {'t': 15, 'y': .80}, {'t': 20, 'y': .40}]},
+					{'date': '02-10-2012 9:18 am',
+					  'graph_data':
+							[{'t': 0, 'y': .20}, {'t': 15, 'y': .80}, {'t': 60, 'y': .40}]}
+				]
+			};
+
+			populateTable(result);
+		}
 		$contentPages.hide();
 		$("#progress-page").show();
 	});
