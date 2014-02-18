@@ -1,12 +1,21 @@
 #resultsGraph {
 	overflow-y: hidden;
 	overflow-x: auto;
-	background: white;
-	height: 80px;
+	height: 120px;
 }
 
 #resultsGraph::-webkit-scrollbar { 
     display: none; 
+}
+
+#resultsGraph canvas {
+	background: white;
+}
+
+#resultsGraph label {
+	position: absolute;
+	top: 5px;
+	font-weight: normal;
 }
 
 #condensedResultsGraph {
@@ -23,4 +32,10 @@
 	left: 0;
 	right: 50%;
 	border-right: 3px solid #777;
+}
+
+.labels {
+	height: 40px;
+	position: relative;
+	color: white;
 }
