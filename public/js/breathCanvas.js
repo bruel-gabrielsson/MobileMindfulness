@@ -52,7 +52,7 @@ BreathCanvas.prototype.reset = function(callback) {
 		if (callback !== undefined) {
 			callback();
 		}
-	},10);
+	},100);
 };
 
 BreathCanvas.prototype.start = function() {
