@@ -12,7 +12,21 @@
 	</div>
 </div>
 
-<div class="bottom-buttons">
-	<button id="start-start-button" type="button" class="start-button btn btn-success btn-lg btn-block">Start</button>
-	<button id="start-help-button" type="button" class="help-button btn btn-info btn-lg btn-block">Help</button>
+<!-- Note: the HTML below exploits some built-in bootstrap classes that nicely
+render an arbitrary number of buttons in a single row, taking up all available
+width (see |btn-group| and |btn-group-justified|).
+
+The only non-bootstrap class in the outermost div is bottom-buttons-home,
+which ensures  that the buttons appear at the bottom. -->
+
+<div class="btn-group btn-group-justified bottom-buttons-home">
+  <div class="btn-group">
+  	<button id="start-start-button" type="button" class="start-button btn btn-success btn-lg">Start</button>  
+  </div>
+  <div class="btn-group">
+  	<button id="start-help-button" type="button" class="help-button btn btn-primary btn-lg">Help</button>  
+  </div>
+  <div class="btn-group">
+  	<button id="start-help-button" type="button" class="progress-button btn btn-info btn-lg">Progress</button>  
+  </div>
 </div>

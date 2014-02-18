@@ -66,6 +66,11 @@ function initializePage() {
 		$("#help-page").show();
 	});
 
+	$(".progress-button").on("click", function(e) {
+		$contentPages.hide();
+		$("#progress-page").show();
+	});
+
 	$(".save-data").on("click", function(e) {
 		console.log("saving data");
 		
