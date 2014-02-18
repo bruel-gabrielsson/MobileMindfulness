@@ -1,26 +1,29 @@
 #resultsGraph {
+	background: #111;
 	overflow-y: hidden;
 	overflow-x: auto;
-	height: 120px;
 }
 
 #resultsGraph::-webkit-scrollbar { 
     display: none; 
 }
 
-#resultsGraph canvas {
-	background: white;
-}
-
-#resultsGraph label {
+#results-page label {
 	position: absolute;
 	top: 5px;
 	font-weight: normal;
 }
 
+#results-page label:not(:first-child):not(:last-child) {
+	margin-left: -18px;
+}
+
 #condensedResultsGraph {
-	background: white;
-	height: 80px;
+	background: #111;
+	position: relative;
+}
+
+#condensedResultsGraphCanvas {
 	position: relative;
 }
 
@@ -31,11 +34,11 @@
 	bottom: 0;
 	left: 0;
 	right: 50%;
-	border-right: 3px solid #777;
+	border-right: 3px solid white;
 }
 
 .labels {
-	height: 40px;
+	background: #222;
 	position: relative;
-	color: white;
+	height: 30px;
 }
