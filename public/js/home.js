@@ -28,6 +28,10 @@ function initializePage() {
 	breathCanvas.init(color0, color1);
 	breathGraph.init(historyLimit,activeLineColor,lineWidth);
 	breathResults.init(historyLimit*2,resultLineColor,lineWidth);
+
+	breathGraph.onStart(function() {
+		$('#active-finish-button').attr('disabled', false);
+	});
 	
 	breathCanvas.bind(function(y) {
 		breathGraph.appendData.call(breathGraph,y);
@@ -37,6 +41,7 @@ function initializePage() {
 
 	$(".start-button").on("click", function(e) {
 		$contentPages.hide();
+		$('#active-finish-button').attr('disabled', true);
 		$("#active-page").show(0, function() {
 			breathCanvas.start.call(breathCanvas);
 			breathGraph.start.call(breathGraph);
