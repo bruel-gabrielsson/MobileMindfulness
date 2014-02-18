@@ -41,17 +41,25 @@ BreathCanvas.prototype.init = function(color0, color1) {
 	}
 };
 
-BreathCanvas.prototype.reset = function() {
+BreathCanvas.prototype.reset = function(callback) {
 	var self = this;
+	this.started = false;
 	this.hideThumb = false;
 	this.$canvas.scrollTop(this.$canvas.height()/2);
 	this.showThumb();
-	setTimeout(function(){self.hideThumb = true;},10);
+	setTimeout(function(){
+		self.hideThumb = true;
+		if (callback !== undefined) {
+			callback();
+		}
+	},10);
 };
 
 BreathCanvas.prototype.start = function() {
-	this.reset();
-	this.started = true;
+	var self = this;
+	this.reset(function() {
+		self.started = true;
+	});
 };
 
 BreathCanvas.prototype.stop = function() {

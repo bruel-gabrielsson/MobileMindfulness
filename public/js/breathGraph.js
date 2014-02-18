@@ -32,8 +32,6 @@ BreathGraph.prototype.start = function() {
 	this.reset();
 	var self = this;
 	this.data = [];
-	this.startTime = new Date().getTime();
-	this.iv = setInterval(self.loop.bind(self), 1);
 };
 
 BreathGraph.prototype.stop = function() {
@@ -42,6 +40,11 @@ BreathGraph.prototype.stop = function() {
 };
 
 BreathGraph.prototype.appendData = function(y) {
+	var self = this;
+	if (this.data.length == 0) {
+		this.startTime = new Date().getTime();
+		this.iv = setInterval(self.loop.bind(self), 1);
+	}
 	var t = new Date().getTime() - this.startTime;
 	this.data.push({t:t,y:y});
 };
