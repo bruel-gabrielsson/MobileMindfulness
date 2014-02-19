@@ -1,8 +1,15 @@
+var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
+	"Aug", "Sep", "Oct", "Nov", "Dec"];
+
+var months_mm = ["01", "02", "03", "04", "05", "06", "07", "08",
+	"09", "10", "11", "12"];
+
+var TRAILING_DAYS = 14; //Number of days to go back in recent history
 
 function createDatesObject(){
-	freq = {};
-	//go back 30 days
-	for (var i = 30;  i >= 0; i--){
+	var freq = {};
+	//go back TRAILING_DAYS days
+	for (var i = TRAILING_DAYS;  i >= 0; i--){
 		var current = sameDateButZeroTime(new Date());
 		current.setDate(current.getDate() - i);
 		freq[current.toString()] = 0;
@@ -13,8 +20,8 @@ function createDatesObject(){
 
 function createDatesArray(){
 	var dates = [];
-	//go back 30 days
-	for (var i = 30;  i >= 0; i--){
+	//go back TRAILING_DAYS days
+	for (var i = TRAILING_DAYS;  i >= 0; i--){
 		var current = sameDateButZeroTime(new Date());
 		current.setDate(current.getDate() - i);
 		dates.push(current.toString());
@@ -22,6 +29,26 @@ function createDatesArray(){
 	return dates;
 }
 
+function createLabels(){
+	var dates = createDatesArray();
+	var labels = [];
+	for (var i = 0; i < dates.length; i++){
+		var date = new Date(dates[i]); //convert back to Date obj
+		labels.push(months[date.getMonth()] + "." + date.getDate());
+	}
+	return labels;
+}
+
+function createYVals(freq){
+	var dates = createDatesArray();
+	var yVals = [];
+	for (var i = 0; i < dates.length; i++){
+		yVals.push(freq[dates[i]]);
+	}
+	return yVals;
+}
+
+//NOTE: Using setUTC{Hours|Minutes...} was causing problems here
 function sameDateButZeroTime(d){
 	var e = new Date(d);
 	e.setHours(0);
@@ -38,6 +65,7 @@ function populateTable(result) {
 
 	$("#wait-msg").hide();
 	$("#progress-table").show();
+	$("progress-graph").show();
 
 	var $p_table = $("#progress-table");
 	var breath_history = result['breath_history'];
@@ -70,7 +98,31 @@ function populateTable(result) {
 		}
 	});
 
-	//TODO: set up the graph
+	//Reset the graph canvas' width and height each the page
+	//is loaded--otherwise width and height double for some
+	//reason upon each viewing
+	$("#progress-graph").get(0)['width'] = 400;
+	$("#progress-graph").get(0)['height'] = 200;
+
+	//Get context with jQuery - using jQuery's .get() method.
+	var ctx = $("#progress-graph").get(0).getContext("2d");
+
+	var x_labels = createLabels();
+	var yVals = createYVals(freq);
+
+	var data = {
+		labels : x_labels,
+		datasets : [
+			{
+				fillColor : "rgba(220,220,220,0.5)",
+				strokeColor : "rgba(220,220,220,1)",
+				data : yVals
+			}
+		]
+	};
+
+	//This will get the first returned node in the jQuery collection.
+	var myNewChart = new Chart(ctx).Bar(data, {});
 
 	$(".session_link").click(function(e) {
 		e.preventDefault();
