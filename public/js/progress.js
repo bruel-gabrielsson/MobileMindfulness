@@ -5,8 +5,8 @@ function createDatesObject(){
 	for (var i = 30;  i >= 0; i--){
 		var current = sameDateButZeroTime(new Date());
 		current.setDate(current.getDate() - i);
-		freq[current.toUTCString()] = 0;
-		console.log("Inserting " + current.toUTCString() + "into freq.");
+		freq[current.toString()] = 0;
+		console.log("Inserting " + current.toString() + "into freq.");
 	}
 	return freq;
 }
@@ -17,17 +17,17 @@ function createDatesArray(){
 	for (var i = 30;  i >= 0; i--){
 		var current = sameDateButZeroTime(new Date());
 		current.setDate(current.getDate() - i);
-		freq.append(current.toUTCString());
+		dates.push(current.toString());
 	}
 	return dates;
 }
 
 function sameDateButZeroTime(d){
 	var e = new Date(d);
-	e.setUTCHours(0);
-	e.setUTCMinutes(0);
-	e.setUTCSeconds(0);
-	e.setUTCMilliseconds(0);
+	e.setHours(0);
+	e.setMinutes(0);
+	e.setSeconds(0);
+	e.setMilliseconds(0);
 	return e;
 }
 
@@ -62,7 +62,7 @@ function populateTable(result) {
 		html += "</tr>";
 		$p_table.append(html);
 
-		var d = sameDateButZeroTime(new Date(record['date'])).toUTCString();
+		var d = sameDateButZeroTime(new Date(record['date'])).toString();
 		console.log("Reviewing session from date " + d);
 		if (d in freq){
 			freq[d] += duration; //Session durations for the same day are additive.
