@@ -33,6 +33,7 @@ h2 {
 	left: 0;
 	right: 0;
 	padding: 15px;
+	overflow: hidden;
 }
 
 .bottom-buttons:not(.single) button {
