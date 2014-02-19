@@ -74,7 +74,7 @@ function populateTable(result) {
 
 	$(".session_link").click(function(e) {
 		e.preventDefault();
-		var sessionID = parseInt(jQuery(this).attr("id"));
+		var sessionID = parseInt(jQuery(this).attr("id")); //get the ID from the session that was clicked
 		console.log("Session ID clicked: ", sessionID);
 
 		//render the results screen with this data.
