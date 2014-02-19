@@ -75,15 +75,15 @@ function initializePage() {
 			//I am assuming the history will arrive sorted by date.
 			var result = { 'breath_history': 
 				[
-					{'date': '02-01-2012 9:16 pm',
+					{'date': 'February 01, 2014 21:16:00',
 			      	  'graph_data': 
-							[{'t': 0, 'y': .50}, {'t': 15, 'y': .70}, {'t': 20, 'y': .60}]},
-					{'date': '02-03-2012 2:03 pm',
+							[{t: 0, y: .50}, {t: 15, y: .70}, {t: 20, y: .60}]},
+					{'date': 'February 03, 2014 14:03:00',
 					  'graph_data':
-							[{'t': 0, 'y': .20}, {'t': 15, 'y': .80}, {'t': 20, 'y': .40}]},
-					{'date': '02-10-2012 9:18 am',
+							[{t: 0, y: .20}, {t: 15, y: .80}, {t: 20, y: .40}]},
+					{'date': 'February 10, 2014 09:18:00',
 					  'graph_data':
-							[{'t': 0, 'y': .20}, {'t': 15, 'y': .80}, {'t': 60, 'y': .40}]}
+							[{t: 0, y: .20}, {t: 15, y: .80}, {t: 60, y: .40}]}
 				]
 			};
 
