@@ -122,7 +122,7 @@ function populateTable(result) {
 	};
 
 	//This will get the first returned node in the jQuery collection.
-	var myNewChart = new Chart(ctx).Bar(data, {});
+	var myNewChart = new Chart(ctx).Line(data, {});
 
 	$(".session_link").click(function(e) {
 		e.preventDefault();
