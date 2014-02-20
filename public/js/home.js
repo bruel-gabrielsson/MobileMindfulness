@@ -60,9 +60,15 @@ function initializePage() {
 
 		// Put saving data here!!!
 
-		$contentPages.hide();
-		$("#progress-page").show();
-		breathProgress.updateSessions.call(breathProgress, true);
+		var json = {"data": data};
+		
+		$.post('/breathingsession/new', json, function() {
+			console.log("IMHERE");
+			$contentPages.hide();
+			$("#progress-page").show();
+			breathProgress.updateSessions.call(breathProgress, true);
+		});
+
 	});
 
 	$(".start-button").on("click", function(e) {
@@ -97,7 +103,7 @@ function initializePage() {
 		$("#progress-page").show();
 		breathProgress.updateSessions.call(breathProgress, false);
 	});
-
+	
 	initHomeScreen();
 
 }

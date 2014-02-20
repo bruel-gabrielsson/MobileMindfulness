@@ -16,7 +16,6 @@ exports.list = function(User){
       return res.render('userlist', {
         "userlist" : users
       });
-      console.log(JSON.stringify(users));
     });
 
   };
@@ -29,7 +28,6 @@ exports.login = function(User) {
     // remember the username
     var username = req.query.userid;
     var password = req.query.passwordinput.toString();
-    console.log('username is: '+ username + password);
 
     User.find({ name: username }, function(error, result) {
       if (error) res.redirect('/');
@@ -39,11 +37,9 @@ exports.login = function(User) {
           error: "No such username, please try again"
         }); 
       } else {
-        console.log(result[0]);
         var usr = result[0];
 
         var pass = usr.password;
-        console.log(pass, password);
         if (pass === password) {
           // send them back to the homepage
           req.session.username = username;
@@ -75,11 +71,10 @@ exports.register = function(User) {
       if (result.length == 0) { // No such user exists 
         var newUsr = new User({ name: username, password: password});
 
-        newUsr.save(function (err, Rickard) {
+        newUsr.save(function (err) {
           if (err) {
             console.log("error");
           } else {  
-            console.log("success save");
             req.session.username = username;
             res.redirect('/index');
           }

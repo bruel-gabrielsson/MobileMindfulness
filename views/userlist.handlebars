@@ -1,5 +1,11 @@
 <ol>
 {{#each userlist}}
   <li><a href="#{{id}}">{{name}}</a></br>{{password}}</li>
+  {{#each breathingSessions}}
+  <div>
+  	BS
+  	{{id}}
+  </div>
+  {{/each}}
 {{/each}}
 </ol>
