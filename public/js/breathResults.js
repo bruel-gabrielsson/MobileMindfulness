@@ -132,7 +132,7 @@ BreathResults.prototype.drawFullGraph = function(ctx, data, fullWidth, canvasHei
 	var startTime = data[0].t;
 	var endTime = data[length-1].t;
 	for (var ms = startTime; ms <= endTime; ms += timeLimit/2) {
-		if (endTime - ms <= timeLimit/4 && ms !== startTime) ms = endTime;
+		if (endTime - ms <= timeLimit/4 && ms != startTime) ms = endTime;
 		var s = Math.round(ms/1000);
 		var m = Math.floor(s/60);
 		s %= 60;
