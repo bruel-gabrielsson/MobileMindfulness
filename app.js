@@ -14,6 +14,7 @@ handlebars.partialsDir = "views/partials/";
 var index = require('./routes/index');
 var login = require('./routes/login');
 var user = require('./routes/user');
+var breathingsession = require('./routes/breathingsession');
 // Example route
 // var user = require('./routes/user');
 
@@ -84,16 +85,20 @@ mongoose.connect(uristring, function (err, res) {
   }
 });
 
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
   // yay!
   var userSchema = mongoose.Schema({
     name: String,
-    password: String
+    password: String,
+    breathingSessions: [{type: mongoose.Schema.ObjectId, ref: 'BreathingSession'}]
   });
 
   var User = mongoose.model('User', userSchema);
+
+  
 
   var Rickard = new User({ name: 'Rickard', password: 'hej' });
   console.log(Rickard.name);
@@ -113,6 +118,8 @@ db.once('open', function callback () {
   app.get('/users', user.list(User));
   app.get('/user_register', user.register(User));
   
+  app.post('/breathingsession/new', breathingsession.save(User));
+  app.get('/breathingsession/history', breathingsession.history(User));
 
 });
 

@@ -1,0 +1,94 @@
+#sessions {
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: absolute;
+	top: 120px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.session {
+	background: #222;
+	border-radius: 5px;
+	padding: 5px 10px;
+	margin: 5px 0;
+	position: relative;
+	overflow: hidden;
+}
+
+.session:hover, .session:active {
+	background: #333;
+}
+
+.session h5 {
+	float: left;
+	color: white;
+	font-size: 16px;
+}
+
+.session .duration {
+	float: right;
+}
+
+#progressGraph {
+	background: #111;
+}
+
+#progressGraph .scrollGraph {
+	overflow-y: hidden;
+	overflow-x: auto;
+}
+
+#progressGraph .scrollGraph::-webkit-scrollbar { 
+    display: none; 
+}
+
+#progressGraph .labels {
+	float: left;	
+}
+
+#progressGraph canvas {
+	float: left;
+}
+
+#progress-page label {
+	position: absolute;
+	font-weight: normal;
+	text-align: center;
+}
+
+#progress-page .labels:not(.y-axis) label {
+	top: 5px;
+	width: 40px;
+	margin-left: -20px;
+}
+
+#progress-page .labels.y-axis label {
+	right: 5px;
+	height: 20px;
+	margin-top: -10px;
+	padding-right: 3px;
+}
+
+#progress-page label:before {
+	content: '';
+	background: white;
+	position: absolute;
+}
+
+#progress-page .labels:not(.y-axis) label:before {
+	width: 2px;
+	height: 5px;
+	top: -5px;
+	left: 50%;
+	margin-left: -1px;
+}
+
+#progress-page .labels.y-axis label:before {
+	width: 5px;
+	height: 2px;
+	right: -5px;
+	top: 50%;
+	margin-top: -1px;
+}

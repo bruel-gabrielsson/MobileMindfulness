@@ -20,7 +20,37 @@ BreathResults.prototype.init = function(timeLimit, color, lineWidth) {
 	}
 };
 
-BreathResults.prototype.populate = function(data) {
+BreathResults.prototype.populate = function(data, date) {
+
+	/*
+	function replacer(key, value) {
+	    if (typeof value === 'number' && !isFinite(value)) {
+	        return String(value);
+	    }
+	    return value;
+	}
+	console.log(JSON.stringify(data, replacer));
+	*/
+
+	this.data = data;
+
+	if (date !== undefined) {
+		$('#results-page h2').text(new Date(date).toDateString());
+		if (this.$buttons) {
+			this.$saveButton.detach();
+			this.$quitButton.detach();
+			this.$buttons.append(this.$backButton);
+			this.$buttons.addClass('single');
+		}
+	} else {
+		$('#results-page h2').text('Results');
+		if (this.$buttons) {
+			this.$backButton.detach();
+			this.$buttons.append(this.$saveButton, this.$quitButton);
+			this.$buttons.removeClass('single');
+		}
+	}
+
 	var length = data.length,
 		first = data[0],
 		last = data[length-1];
@@ -39,10 +69,12 @@ BreathResults.prototype.populate = function(data) {
 	var canvasWidth = this.canvasWidth,
 		canvasHeight = this.canvasHeight;
 		
+
+	var ww = $(window).width();
 	var ctx1 = this.fullGraph.getContext('2d');
 	var ctx2 = this.condensed.getContext('2d');
-	ctx1.clearRect(0,0,canvasWidth,canvasHeight);
-	ctx2.clearRect(0,0,canvasWidth,canvasHeight);
+	ctx1.clearRect(0,0,Math.max(canvasWidth,ww),canvasHeight);
+	ctx2.clearRect(0,0,Math.max(canvasWidth,ww),canvasHeight);
 
 	if (length > 1) {
 		// Fix canvas sizes
@@ -180,3 +212,19 @@ BreathResults.prototype.drawCondensedGraph = function(ctx, data, ratio, fullWidt
 
 	$labels.append($startLabel, $endLabel);
 }
+
+BreathResults.prototype.backButton = function(callback) {
+	this.$buttons = $('#results-page .bottom-buttons');
+	if (!this.$saveButton) this.$saveButton = $('#results-page button.save-button');
+	this.$quitButton = $('#results-page button.quit-button');
+	this.$backButton = $('<button type="button" class="back-to-progress btn btn-danger btn-lg btn-block">Back</button>');
+	this.$backButton.click(callback);
+};
+
+BreathResults.prototype.saveData = function(callback) {
+	var self = this;
+	if (!this.$saveButton) this.$saveButton = $('#results-page button.save-button');
+	this.$saveButton.click(function() {
+		callback(self.data);
+	});
+};

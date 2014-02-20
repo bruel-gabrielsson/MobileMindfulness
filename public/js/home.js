@@ -12,22 +12,27 @@ $(document).ready(function() {
  * Function that is called when the document is ready.
  */
 function initializePage() {
-	console.log("Javascript connected!");
+	var self = this;
 
 	var color0 = [0,95,150],
 		color1 = [0,255,132];
 	var historyLimit = 15000, // Show the last 15 seconds in the graph
 		activeLineColor = [255,255,255],
 		resultLineColor = [255,255,255],
-		lineWidth = 2;
+		lineWidth = 2,
+		progressLimit = 10; // The number of days that sould fit into the progress graph
 	
 	var breathCanvas = new BreathCanvas();
 	var breathGraph = new BreathGraph();
 	var breathResults = new BreathResults();
+	var breathProgress = new BreathProgress();
 	
 	breathCanvas.init(color0, color1);
 	breathGraph.init(historyLimit,activeLineColor,lineWidth);
 	breathResults.init(historyLimit*2,resultLineColor,lineWidth);
+	breathProgress.init(progressLimit,activeLineColor,lineWidth);
+
+	var $contentPages = $('.content-page');
 
 	breathGraph.onStart(function() {
 		$('#active-finish-button').attr('disabled', false);
@@ -37,7 +42,27 @@ function initializePage() {
 		breathGraph.appendData.call(breathGraph,y);
 	});
 
-	var $contentPages = $('.content-page');
+	breathProgress.bind(function(session) { // Bind session click event
+		$contentPages.hide();
+		$("#results-page").show();
+		breathResults.populate.call(breathResults, session.data, session.date);
+	});
+	
+	breathResults.backButton(function() {
+		$contentPages.hide();
+		$("#progress-page").show();
+	});
+
+	breathResults.saveData(function(data) {
+		var json = {"data": data};
+		
+		$.post('/breathingsession/new', json, function() {
+			$contentPages.hide();
+			$("#progress-page").show();
+			breathProgress.updateSessions.call(breathProgress, true);
+		});
+
+	});
 
 	$(".start-button").on("click", function(e) {
 		$contentPages.hide();
@@ -66,11 +91,12 @@ function initializePage() {
 		$("#help-page").show();
 	});
 
-	$(".save-data").on("click", function(e) {
-		console.log("saving data");
-		
+	$(".progress-button").on("click", function(e) {
+		$contentPages.hide();
+		$("#progress-page").show();
+		breathProgress.updateSessions.call(breathProgress, false);
 	});
-
+	
 	initHomeScreen();
 
 }
