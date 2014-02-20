@@ -44,19 +44,7 @@ exports.save = function(User) {
             newBreathingsession.save(function(err) {if (err) {console.log(err)}});
             data.push(newBreathingsession.id);
             usr.breathingSessions.push(newBreathingsession);
-            usr.save(afterSaving);
-            /*
-            usr.update({ breathingSessions: data }, function (err, numberAffected, raw) {
-              if (err) return handleError(err);
-              console.log('The number of updated documents was %d', numberAffected);
-              console.log('The raw response from Mongo was ', raw);
-
-              console.log(usr.breathingSessions[0].id);
-              console.log(usr.breathingSessions[0].data);
-            });
-            */
-
-            
+            usr.save(afterSaving);            
 
             function afterSaving(err) {
               if (err) {console.log(err); res.send(500)}
@@ -95,6 +83,56 @@ exports.save = function(User) {
     res.redirect("/");
   }
   */
+}
+
+
+exports.history = function(User) {
+  return function(req, res) {
+
+      var username = req.session.username;
+      if (username != null) {
+        console.log(username);
+
+        User.find({ name: username }, function(error, result) {
+          if (error) res.redirect('/');
+
+          if (result.length == 0) { 
+          } else {
+            console.log(result[0]);
+            var usr = result[0];
+            var data = usr.breathingSessions;
+            console.log(data);
+
+            console.log("FORMDATA", form_data.data);
+
+            var newBreathingsession = new models.BreathingSession({
+              "date": new Date(),
+              "data": form_data.data
+            });
+            newBreathingsession.save(function(err) {if (err) {console.log(err)}});
+            data.push(newBreathingsession.id);
+            usr.breathingSessions.push(newBreathingsession);
+            usr.save(afterSaving);            
+
+            function afterSaving(err) {
+              if (err) {console.log(err); res.send(500)}
+
+              var id = usr.breathingSessions[usr.breathingSessions.length - 1];
+              console.log("FINAL", usr.breathingSessions[usr.breathingSessions.length - 1]);
+              
+              models.BreathingSession.find({ _id: id }, function(error, result) {
+                if (error) {console.log(error)};
+                console.log(result);
+
+                res.send(200);
+              });
+              
+            }
+          }
+        });
+      }
+
+  };
 }
 
 
