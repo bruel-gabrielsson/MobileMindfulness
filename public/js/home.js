@@ -68,7 +68,26 @@ function initializePage() {
 
 	$(".save-data").on("click", function(e) {
 		console.log("saving data");
+
+		/*
+		breathResults.bind(function(data) {
+
+		});
+		*/
+		// A EXAMPLE OF THE FORMAT OF DATA THAT WILL BE SAVED
+		var data = [
+			{"y": 0.4, "t": 3012},
+			{"y": 0.4, "t": 3012},
+			{"y": 0.4, "t": 3012}
+		];
+
+		var json = {"data": data};
 		
+		$.post('/breathingsession/new', json, function() {
+			//window.location.href = '/index'; // reload the page
+			console.log("DATA SAVED");
+		});
+
 	});
 
 	initHomeScreen();
