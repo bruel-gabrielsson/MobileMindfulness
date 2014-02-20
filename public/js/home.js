@@ -18,7 +18,7 @@ function initializePage() {
 		color1 = [0,255,132];
 	var historyLimit = 15000, // Show the last 15 seconds in the graph
 		activeLineColor = [255,255,255],
-		resultLineColor = [0,95,150],
+		resultLineColor = [255,255,255],
 		lineWidth = 2;
 	
 	var breathCanvas = new BreathCanvas();
@@ -28,6 +28,10 @@ function initializePage() {
 	breathCanvas.init(color0, color1);
 	breathGraph.init(historyLimit,activeLineColor,lineWidth);
 	breathResults.init(historyLimit*2,resultLineColor,lineWidth);
+
+	breathGraph.onStart(function() {
+		$('#active-finish-button').attr('disabled', false);
+	});
 	
 	breathCanvas.bind(function(y) {
 		breathGraph.appendData.call(breathGraph,y);
@@ -37,6 +41,7 @@ function initializePage() {
 
 	$(".start-button").on("click", function(e) {
 		$contentPages.hide();
+		$('#active-finish-button').attr('disabled', true);
 		$("#active-page").show(0, function() {
 			breathCanvas.start.call(breathCanvas);
 			breathGraph.start.call(breathGraph);
@@ -59,6 +64,11 @@ function initializePage() {
 	$(".help-button").on("click", function(e) {
 		$contentPages.hide();
 		$("#help-page").show();
+	});
+
+	$(".save-data").on("click", function(e) {
+		console.log("saving data");
+		
 	});
 
 	initHomeScreen();

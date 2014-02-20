@@ -7,14 +7,16 @@ BreathResults.prototype.init = function(timeLimit, color, lineWidth) {
 
 	var $fullGraphContainer = $('#resultsGraph');
 	if ($fullGraphContainer.length) {
-		this.$fullGraph = $('<canvas id="resultGraphCanvas">');
-		$fullGraphContainer.append(this.$fullGraph);
-		this.fullGraph = document.getElementById('resultGraphCanvas');
+		this.$fullGraph = $('<canvas id="resultsGraphCanvas">');
+		this.$fullLabels = $('<div class="labels">');
+		$fullGraphContainer.append(this.$fullGraph, this.$fullLabels);
+		this.fullGraph = document.getElementById('resultsGraphCanvas');
 
 		var $condensedContainer = $('#condensedResultsGraph');
-		this.$condensed = $('<canvas id="condensedResultGraphCanvas">');
-		$condensedContainer.append(this.$condensed);
-		this.condensed = document.getElementById('condensedResultGraphCanvas');
+		this.$condensed = $('<canvas id="condensedResultsGraphCanvas">');
+		this.$condensedLabels = $('<div class="labels">');
+		$condensedContainer.append(this.$condensed, this.$condensedLabels);
+		this.condensed = document.getElementById('condensedResultsGraphCanvas');
 	}
 };
 
@@ -25,7 +27,11 @@ BreathResults.prototype.populate = function(data) {
 
 	this.$condensed.css({
 		width: '100%',
-		height: '100%'
+		height: '80px'
+	});
+	this.$fullGraph.css({
+		width: this.$condensed.width(),
+		height: this.$condensed.height()
 	});
 
 	this.canvasWidth = this.$condensed.width();
@@ -51,6 +57,9 @@ BreathResults.prototype.populate = function(data) {
 			width: fullWidth,
 			height: canvasHeight
 		});
+		this.$fullLabels.css({
+			width: fullWidth
+		});
 		this.fullGraph.width = fullWidth;
 		this.fullGraph.height = canvasHeight;
 
@@ -60,18 +69,18 @@ BreathResults.prototype.populate = function(data) {
 			lineWidth = this.lineWidth;
 
 		// Draw full graph
-		this.drawFullGraph(ctx1, data, fullWidth, canvasHeight, timeSpan);
+		this.drawFullGraph(ctx1, data, fullWidth, canvasHeight, timeSpan, this.$fullLabels);
 
 		// Draw condensed graph
 		if (ratio < 1) {
-			this.drawFullGraph(ctx2, data, fullWidth, canvasHeight, timeSpan);
+			this.drawFullGraph(ctx2, data, fullWidth, canvasHeight, timeSpan, this.$condensedLabels);
 		} else {
-			this.drawCondensedGraph(ctx2, data, ratio, fullWidth, canvasWidth, canvasHeight, timeSpan);
+			this.drawCondensedGraph(ctx2, data, ratio, fullWidth, canvasWidth, canvasHeight, timeSpan, this.$condensedLabels);
 		}
 	}
 };
 
-BreathResults.prototype.drawFullGraph = function(ctx, data, fullWidth, canvasHeight, timeSpan) {
+BreathResults.prototype.drawFullGraph = function(ctx, data, fullWidth, canvasHeight, timeSpan, $labels) {
 	var length = data.length;
 	ctx.strokeStyle = this.color;
 	ctx.lineWidth = this.lineWidth;
@@ -86,9 +95,38 @@ BreathResults.prototype.drawFullGraph = function(ctx, data, fullWidth, canvasHei
 	}
 	ctx.stroke();
 	ctx.closePath();
+	$labels.empty();
+	var timeLimit = this.timeLimit;
+	var startTime = data[0].t;
+	var endTime = data[length-1].t;
+	for (var ms = startTime; ms <= endTime; ms += timeLimit/2) {
+		if (endTime - ms <= timeLimit/4 && ms !== startTime) ms = endTime;
+		var s = Math.round(ms/1000);
+		var m = Math.floor(s/60);
+		s %= 60;
+		var $label = $('<label>' + (m<10?0:'') + m + ':' + (s<10?0:'') + s + '</label>');
+		var css = {};
+		if (ms == endTime) {
+			css.right = 0;
+		} else if (ms == startTime) {
+			css.left = 0;
+		} else {
+			css.left = (ms/endTime*fullWidth);
+		}
+		$label.css(css);
+		$labels.append($label);
+	}
+	if (ms !== endTime) {
+		var s = Math.round(endTime/1000);
+		var m = Math.floor(s/60);
+		s %= 60;
+		var $label = $('<label>' + (m<10?0:'') + m + ':' + (s<10?0:'') + s + '</label>');
+		$label.css({right:0});
+		$labels.append($label);
+	}
 }
 
-BreathResults.prototype.drawCondensedGraph = function(ctx, data, ratio, fullWidth, canvasWidth, canvasHeight, timeSpan) {
+BreathResults.prototype.drawCondensedGraph = function(ctx, data, ratio, fullWidth, canvasWidth, canvasHeight, timeSpan, $labels) {
 	var length = data.length;
 	ctx.strokeStyle = this.color;
 	ctx.lineWidth = this.lineWidth;
@@ -123,4 +161,22 @@ BreathResults.prototype.drawCondensedGraph = function(ctx, data, ratio, fullWidt
 	}
 	ctx.stroke();
 	ctx.closePath();
+
+	$labels.empty();
+
+	var startTime = firstPoint.t;
+	var s = Math.round(startTime/1000);
+	var m = Math.floor(s/60);
+	s %= 60;
+	var $startLabel = $('<label>' + (m<10?0:'') + m + ':' + (s<10?0:'') + s + '</label>');
+	$startLabel.css({left:0});
+
+	var endTime = data[length-1].t;
+	var s = Math.round(endTime/1000);
+	var m = Math.floor(s/60);
+	s %= 60;
+	var $endLabel = $('<label>' + (m<10?0:'') + m + ':' + (s<10?0:'') + s + '</label>');
+	$endLabel.css({right:0});
+
+	$labels.append($startLabel, $endLabel);
 }
