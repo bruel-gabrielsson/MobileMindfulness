@@ -1,0 +1,32 @@
+#sessions {
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.session {
+	background: #222;
+	border-radius: 5px;
+	padding: 5px 10px;
+	margin: 5px 0;
+	position: relative;
+	overflow: hidden;
+}
+
+.session:hover, .session:active {
+	background: #333;
+}
+
+.session h5 {
+	float: left;
+	color: white;
+	font-size: 16px;
+}
+
+.session .duration {
+	float: right;
+}

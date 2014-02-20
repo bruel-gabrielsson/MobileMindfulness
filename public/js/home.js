@@ -12,6 +12,7 @@ $(document).ready(function() {
  * Function that is called when the document is ready.
  */
 function initializePage() {
+	var self = this;
 	console.log("Javascript connected!");
 
 	var color0 = [0,95,150],
@@ -24,10 +25,14 @@ function initializePage() {
 	var breathCanvas = new BreathCanvas();
 	var breathGraph = new BreathGraph();
 	var breathResults = new BreathResults();
+	var breathProgress = new BreathProgress();
 	
 	breathCanvas.init(color0, color1);
 	breathGraph.init(historyLimit,activeLineColor,lineWidth);
 	breathResults.init(historyLimit*2,resultLineColor,lineWidth);
+	breathProgress.init(historyLimit,activeLineColor,lineWidth);
+
+	var $contentPages = $('.content-page');
 
 	breathGraph.onStart(function() {
 		$('#active-finish-button').attr('disabled', false);
@@ -37,7 +42,27 @@ function initializePage() {
 		breathGraph.appendData.call(breathGraph,y);
 	});
 
-	var $contentPages = $('.content-page');
+	breathProgress.bind(function(session) { // Bind session click event
+		$contentPages.hide();
+		$("#results-page").show();
+		breathResults.populate.call(breathResults, session.data, session.date);
+	});
+	
+	breathResults.backButton(function() {
+		$contentPages.hide();
+		$("#progress-page").show();
+	});
+
+	breathResults.saveData(function(data) {
+		// This is called when save button is pressed (even if the user is not logged in)
+		// Be sure to use 'self' instead of 'this' (if you need to) since the 'this' pointer will point to the breathResults object
+
+		// Put saving data here!!!
+
+		$contentPages.hide();
+		$("#progress-page").show();
+		breathProgress.updateSessions.call(breathProgress, true);
+	});
 
 	$(".start-button").on("click", function(e) {
 		$contentPages.hide();
@@ -66,9 +91,10 @@ function initializePage() {
 		$("#help-page").show();
 	});
 
-	$(".save-data").on("click", function(e) {
-		console.log("saving data");
-		
+	$(".progress-button").on("click", function(e) {
+		$contentPages.hide();
+		$("#progress-page").show();
+		breathProgress.updateSessions.call(breathProgress, false);
 	});
 
 	initHomeScreen();

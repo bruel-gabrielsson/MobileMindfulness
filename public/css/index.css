@@ -10,6 +10,7 @@ body {
 	left: 15px;
 	right: 15px;
 	overflow: hidden;
+	z-index: 5;
 }
 
 h2 {
@@ -40,6 +41,15 @@ h2 {
 .bottom-buttons:not(.single) button:last-child {
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
+}
+
+.bottom-buttons.triple button {
+	width: 33%;
+}
+
+.bottom-buttons.triple button:nth-child(2) {
+	border-radius: 0;
+	width: 34%
 }
 
 #start-page {
