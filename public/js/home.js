@@ -20,7 +20,8 @@ function initializePage() {
 	var historyLimit = 15000, // Show the last 15 seconds in the graph
 		activeLineColor = [255,255,255],
 		resultLineColor = [255,255,255],
-		lineWidth = 2;
+		lineWidth = 2,
+		progressLimit = 10; // The number of days that sould fit into the progress graph
 	
 	var breathCanvas = new BreathCanvas();
 	var breathGraph = new BreathGraph();
@@ -30,7 +31,7 @@ function initializePage() {
 	breathCanvas.init(color0, color1);
 	breathGraph.init(historyLimit,activeLineColor,lineWidth);
 	breathResults.init(historyLimit*2,resultLineColor,lineWidth);
-	breathProgress.init(historyLimit,activeLineColor,lineWidth);
+	breathProgress.init(progressLimit,activeLineColor,lineWidth);
 
 	var $contentPages = $('.content-page');
 

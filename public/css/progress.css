@@ -2,7 +2,7 @@
 	overflow-x: hidden;
 	overflow-y: auto;
 	position: absolute;
-	top: 0;
+	top: 80px;
 	bottom: 0;
 	left: 0;
 	right: 0;
@@ -29,4 +29,20 @@
 
 .session .duration {
 	float: right;
+}
+
+#progressGraph {
+	background: #111;
+	overflow-y: hidden;
+	overflow-x: auto;
+}
+
+#progressGraph::-webkit-scrollbar { 
+    display: none; 
+}
+
+#progress-page label {
+	position: absolute;
+	top: 5px;
+	font-weight: normal;
 }
