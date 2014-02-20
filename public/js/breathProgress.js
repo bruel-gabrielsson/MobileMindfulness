@@ -68,6 +68,8 @@ BreathProgress.prototype.updateSessions = function(force) {
 		}
 	];
 
+
+
 	this.clearSessions();
 	var numberOfSessions = sessions.length;
 	for (var i = 0; i < numberOfSessions; i++) {
@@ -75,6 +77,14 @@ BreathProgress.prototype.updateSessions = function(force) {
 	}
 	this.populate(sessions);
 };
+
+var getHistory = function() {
+	var session = [];
+
+	$.get('/') {
+
+	}
+}
 
 BreathProgress.prototype.bind = function(callback) {
 	// Bind callback to session click event
