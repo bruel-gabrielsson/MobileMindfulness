@@ -7,6 +7,7 @@ BreathCanvas.prototype.init = function(color0, color1) {
 		this.callbacks = [];
 		this.$canvas = $('#breathCanvas');
 		this.$controller = $('#breathController');
+		this.$instructions = $('#instructions');
 		this.hideThumb = true;
 
 		if (this.$canvas.length) {
@@ -37,6 +38,10 @@ BreathCanvas.prototype.init = function(color0, color1) {
 					self.$canvas.scrollTop(self.$canvas.height()/2);
 				}
 			});
+
+			this.$instructions.click(function(e) {
+				self.hideInstructions();
+			});
 		}
 	}
 };
@@ -47,6 +52,7 @@ BreathCanvas.prototype.reset = function(callback) {
 	this.hideThumb = false;
 	this.$canvas.scrollTop(this.$canvas.height()/2);
 	this.showThumb();
+	// this.showInstructions();
 	setTimeout(function(){
 		self.hideThumb = true;
 		if (callback !== undefined) {
@@ -73,6 +79,14 @@ BreathCanvas.prototype.bind = function(callback) {
 BreathCanvas.prototype.showThumb = function() {
 	this.$controller.removeClass('active');
 };
+
+BreathCanvas.prototype.showInstructions = function() {
+	this.$instructions.show();
+}
+
+BreathCanvas.prototype.hideInstructions = function() {
+	this.$instructions.hide();
+}
 
 BreathCanvas.prototype.notify = function(y) {
 	var callbacks = this.callbacks;
