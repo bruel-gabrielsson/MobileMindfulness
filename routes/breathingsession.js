@@ -22,7 +22,7 @@ exports.save = function(User) {
 	    	User.find({ name: username }, function(error, result) {
 		      if (error) res.redirect('/');
 
-		      if (result.length == 0) { 
+		      if (result.length == 0) {
 		      } else {
 		        var usr = result[0];
 
@@ -50,7 +50,7 @@ exports.history = function(User) {
       var username = req.session.username;
       if (username != null) {
 
-        models.BreathingSession.find({username: username.toString()}, function(error, result) {
+        models.BreathingSession.find({username: username.toString()}).sort([['date','ascending']]).exec(function(error, result) {
           if (error) res.redirect('/');
 
           res.json(result);

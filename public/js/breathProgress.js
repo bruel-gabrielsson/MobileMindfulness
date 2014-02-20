@@ -7,9 +7,12 @@ BreathProgress.prototype.init = function(dayLimit, color, lineWidth) {
 
 	var $graphContainer = $('#progressGraph');
 	if ($graphContainer.length) {
+		this.$yLabels = $('<div class="y-axis labels">');
+		this.$scrollable = $('<div class="scrollGraph">');
 		this.$graph = $('<canvas id="progressGraphCanvas">');
-		this.$labels = $('<div class="labels">');
-		$graphContainer.append(this.$graph, this.$labels);
+		this.$xLabels = $('<div class="labels">');
+		this.$scrollable.append(this.$graph, this.$xLabels);
+		$graphContainer.append(this.$yLabels, this.$scrollable);
 		this.graph = document.getElementById('progressGraphCanvas');
 	}
 
@@ -22,10 +25,9 @@ BreathProgress.prototype.updateSessions = function(force) {
 		return; // Do not fetch new data if no new data is uploaded
 	}
 	this.fetched = true;
-	console.log('fetch data from server');
 	
 	var self = this;
-	getHistory(function(sessions) {
+	$.get('/breathingsession/history', function(sessions) {
 
 		self.clearSessions();
 		var numberOfSessions = sessions.length;
@@ -34,16 +36,8 @@ BreathProgress.prototype.updateSessions = function(force) {
 		}
 		self.populate(sessions);
 	});
-
 	
 };
-
-var getHistory = function(call) {
-
-	$.get('/breathingsession/history', function(project_json) {
-		call(project_json);
-	});
-}
 
 BreathProgress.prototype.bind = function(callback) {
 	// Bind callback to session click event
@@ -64,20 +58,20 @@ BreathProgress.prototype.addSession = function(session) {
 	var self = this;
 	var $session = $('<div class="session" id="' + session._id + '">');
 
-	var $date = $('<h5>' + session.date + '</h5>');
+	var $date = $('<h5>' + new Date(session.date).toDateString() + '</h5>');
 
 	var dt = session.data[session.data.length-1].t - session.data[0].t;
 	var s = Math.round(dt/1000);
 	var m = Math.floor(s/60);
 	s %= 60;
-	var $duration = $('<h5 class="duration">' + (m<10?0:'') + m + ':' + (s<10?0:'') + s + '</h5>');
+	var $duration = $('<h5 class="duration">' + (m>0?(m + 'm'):'') + (m>0&&s>0?' ':'') + (s>0?(s + 's'):'') + '</h5>');
 	$session.append($date, $duration);
 
 	$session.click(function() {
 		self.notify(session);
 	});
 
-	this.$sessions.append($session);
+	this.$sessions.prepend($session);
 };
 
 BreathProgress.prototype.populate = function(sessions) {
@@ -89,7 +83,7 @@ BreathProgress.prototype.populate = function(sessions) {
 		height: '80px'
 	});
 
-	this.canvasWidth = this.$graph.width();
+	this.canvasWidth = this.$graph.width()-30;
 	this.canvasHeight = this.$graph.height();
 	var canvasWidth = this.canvasWidth,
 		canvasHeight = this.canvasHeight;
@@ -105,7 +99,12 @@ BreathProgress.prototype.populate = function(sessions) {
 
 		for (var i = 0; i < length; i++) {
 			var sessionData = sessions[i].data;
-			var date = Date.parse(sessions[i].date);
+			var date = new Date(sessions[i].date);
+			date.setHours(0);
+			date.setMinutes(0);
+			date.setSeconds(0);
+			date.setMilliseconds(0);
+			date = date.valueOf();
 			var duration = sessionData[sessionData.length-1].t - sessionData[0].t;
 			var lastDPindex = dataPoints.length-1;
 			if (i > 0 && date === dataPoints[lastDPindex].date) {
@@ -122,33 +121,38 @@ BreathProgress.prototype.populate = function(sessions) {
 		}
 
 		length = dataPoints.length;
-		var first = dataPoints[0],
-			last = dataPoints[length-1];
+		if (length > 1) {
+			var first = dataPoints[0],
+				last = dataPoints[length-1];
 
-		var timeSpan = last.date - first.date,
-			timeLimit = this.dayLimit * 24 * 60 * 60 * 1000,
-			ratio = timeSpan/timeLimit,
-			fullWidth = canvasWidth * Math.max(ratio,1);
-		this.$graph.css({
-			width: fullWidth,
-			height: canvasHeight
-		});
-		this.$labels.css({
-			width: fullWidth
-		});
-		this.graph.width = fullWidth;
-		this.graph.height = canvasHeight;
+			var timeSpan = last.date - first.date,
+				timeLimit = length > 2 ? this.dayLimit * 24 * 60 * 60 * 1000 : timeSpan,
+				ratio = timeSpan/timeLimit,
+				fullWidth = canvasWidth * Math.max(ratio,1);
+			this.$graph.css({
+				width: fullWidth,
+				height: canvasHeight
+			});
+			this.$xLabels.css({
+				width: fullWidth
+			});
+			this.$yLabels.css({
+				height: canvasHeight + 30
+			});
+			this.graph.width = fullWidth;
+			this.graph.height = canvasHeight;
 
-		// Get graph properties
-		var color = this.color,
-			lineWidth = this.lineWidth;
+			// Get graph properties
+			var color = this.color,
+				lineWidth = this.lineWidth;
 
-		// Draw graph
-		this.drawGraph(ctx, dataPoints, fullWidth, canvasHeight, timeSpan, this.$labels, maxY);
+			// Draw graph
+			this.drawGraph(ctx, dataPoints, fullWidth, canvasHeight, timeSpan, this.$xLabels, this.$yLabels, maxY);
+		}
 	}
 };
 
-BreathProgress.prototype.drawGraph = function(ctx, data, fullWidth, canvasHeight, timeSpan, $labels, maxY) {
+BreathProgress.prototype.drawGraph = function(ctx, data, fullWidth, canvasHeight, timeSpan, $xLabels, $yLabels, maxY) {
 	var length = data.length;
 	ctx.strokeStyle = this.color;
 	ctx.fillStyle = this.color;
@@ -156,28 +160,76 @@ BreathProgress.prototype.drawGraph = function(ctx, data, fullWidth, canvasHeight
 	ctx.beginPath();
 	var firstPoint = data[0],
 		t0 = firstPoint.date;
-	ctx.moveTo(0,(0.9 - firstPoint.duration/maxY*0.8)*canvasHeight);
+	var circleRadius = 5,
+		xMargin = 20;
+	fullWidth -= 2*xMargin;
+	ctx.moveTo(xMargin,(0.9 - firstPoint.duration/maxY*0.8)*canvasHeight);
 	var point;
 	for (var i = 1; i < length; i++) {
 		point = data[i];
-		ctx.lineTo((point.date-t0)/timeSpan*fullWidth,(0.9 -point.duration/maxY*0.8)*canvasHeight);
+		ctx.lineTo(xMargin + (point.date-t0)/timeSpan*fullWidth,(0.9 -point.duration/maxY*0.8)*canvasHeight);
 	}
 	ctx.stroke();
 	ctx.closePath();
 
 	ctx.beginPath();
-	ctx.arc((firstPoint.date-t0)/timeSpan*fullWidth,(0.9 -firstPoint.duration/maxY*0.8)*canvasHeight,5,0,2*Math.PI);
+	ctx.arc(xMargin + (firstPoint.date-t0)/timeSpan*fullWidth,(0.9 -firstPoint.duration/maxY*0.8)*canvasHeight,circleRadius,0,2*Math.PI);
 	ctx.fill();
 	ctx.closePath();
 	for (var i = 1; i < length; i++) {
 		point = data[i];
 		ctx.beginPath();
-		ctx.arc((point.date-t0)/timeSpan*fullWidth,(0.9 -point.duration/maxY*0.8)*canvasHeight,5,0,2*Math.PI);
+		ctx.arc(xMargin + (point.date-t0)/timeSpan*fullWidth,(0.9 -point.duration/maxY*0.8)*canvasHeight,circleRadius,0,2*Math.PI);
 		ctx.fill();
 		ctx.closePath();
 	}
 
-	$labels.empty();
+	$xLabels.empty();
+	var dayLimit = this.dayLimit;
+	var startTime = data[0].date;
+	var endTime = data[length-1].date;
+	var dayMs = 24*60*60*1000;
+	var step = Math.floor(dayLimit/4) * dayMs;
+	for (var ms = startTime; ms <= endTime; ms += dayMs) {
+		var $label = $('<label>');
+		if (ms !== startTime && ms !== endTime && ((endTime-ms) % step || ms - startTime <= step/2)) {
+			var date = new Date(ms);
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			$label.addClass('tick');
+		} else {
+			var date = new Date(ms);
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			$label.text(month + '/' + day);
+		}
+		var css = {};
+		//if (ms == endTime) css.right = 0;
+		//else if (ms == startTime) css.left = 0;
+		css.left = xMargin + ((ms-startTime)/(endTime-startTime)*fullWidth);
+		$label.css(css);
+		$xLabels.append($label);
+	}
+
+	$yLabels.empty();
+	var maxMinutes = maxY/(60*1000);
+	var $label0 = $('<label>0</label>');
+	$label0.css({top: 0.9*canvasHeight});
+	$yLabels.append($label0);
+	var step = maxMinutes > 2 ? (Math.floor(maxMinutes / 2)) :
+			   maxMinutes > 0.5 ? 0.5 :
+			   0.1;
+	for (var m = 0; m <= maxMinutes; m += step) {
+		var $label = $('<label>');
+		$label.css({top:(0.9 -m/maxMinutes*0.8)*canvasHeight});
+		var time = Math.round(m*10)/10;
+		if (time == 0.5) time = '½';
+		else if (time == 1.5) time = '1½';
+		$label.text(time);
+		$yLabels.append($label);
+	}
+
+	this.$scrollable.scrollLeft(fullWidth);
 	/*
 	var timeLimit = this.timeLimit;
 	var startTime = data[0].t;

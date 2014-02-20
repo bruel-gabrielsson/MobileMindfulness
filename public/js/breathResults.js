@@ -35,7 +35,7 @@ BreathResults.prototype.populate = function(data, date) {
 	this.data = data;
 
 	if (date !== undefined) {
-		$('#results-page h2').text(date);
+		$('#results-page h2').text(new Date(date).toDateString());
 		if (this.$buttons) {
 			this.$saveButton.detach();
 			this.$quitButton.detach();

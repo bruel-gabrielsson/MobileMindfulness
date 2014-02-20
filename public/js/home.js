@@ -13,7 +13,6 @@ $(document).ready(function() {
  */
 function initializePage() {
 	var self = this;
-	console.log("Javascript connected!");
 
 	var color0 = [0,95,150],
 		color1 = [0,255,132];
@@ -55,15 +54,9 @@ function initializePage() {
 	});
 
 	breathResults.saveData(function(data) {
-		// This is called when save button is pressed (even if the user is not logged in)
-		// Be sure to use 'self' instead of 'this' (if you need to) since the 'this' pointer will point to the breathResults object
-
-		// Put saving data here!!!
-
 		var json = {"data": data};
 		
 		$.post('/breathingsession/new', json, function() {
-			console.log("IMHERE");
 			$contentPages.hide();
 			$("#progress-page").show();
 			breathProgress.updateSessions.call(breathProgress, true);

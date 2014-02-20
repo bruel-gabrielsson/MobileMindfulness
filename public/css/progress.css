@@ -2,7 +2,7 @@
 	overflow-x: hidden;
 	overflow-y: auto;
 	position: absolute;
-	top: 80px;
+	top: 120px;
 	bottom: 0;
 	left: 0;
 	right: 0;
@@ -33,16 +33,62 @@
 
 #progressGraph {
 	background: #111;
+}
+
+#progressGraph .scrollGraph {
 	overflow-y: hidden;
 	overflow-x: auto;
 }
 
-#progressGraph::-webkit-scrollbar { 
+#progressGraph .scrollGraph::-webkit-scrollbar { 
     display: none; 
+}
+
+#progressGraph .labels {
+	float: left;	
+}
+
+#progressGraph canvas {
+	float: left;
 }
 
 #progress-page label {
 	position: absolute;
-	top: 5px;
 	font-weight: normal;
+	text-align: center;
+}
+
+#progress-page .labels:not(.y-axis) label {
+	top: 5px;
+	width: 40px;
+	margin-left: -20px;
+}
+
+#progress-page .labels.y-axis label {
+	right: 5px;
+	height: 20px;
+	margin-top: -10px;
+	padding-right: 3px;
+}
+
+#progress-page label:before {
+	content: '';
+	background: white;
+	position: absolute;
+}
+
+#progress-page .labels:not(.y-axis) label:before {
+	width: 2px;
+	height: 5px;
+	top: -5px;
+	left: 50%;
+	margin-left: -1px;
+}
+
+#progress-page .labels.y-axis label:before {
+	width: 5px;
+	height: 2px;
+	right: -5px;
+	top: 50%;
+	margin-top: -1px;
 }
