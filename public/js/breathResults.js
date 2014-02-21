@@ -82,7 +82,7 @@ BreathResults.prototype.populate = function(data, date) {
 		this.condensed.width = canvasWidth;
 		this.condensed.height = canvasHeight;
 
-		var timeSpan = last.t - first.t,
+		var timeSpan = parseInt(last.t) - parseInt(first.t),
 			ratio = timeSpan / this.timeLimit,
 			fullWidth = canvasWidth * Math.max(ratio,1);
 		this.$fullGraph.css({
@@ -118,19 +118,19 @@ BreathResults.prototype.drawFullGraph = function(ctx, data, fullWidth, canvasHei
 	ctx.lineWidth = this.lineWidth;
 	ctx.beginPath();
 	var firstPoint = data[0],
-		t0 = firstPoint.t;
+		t0 = parseInt(firstPoint.t);
 	ctx.moveTo(0,(0.9 - firstPoint.y*0.8)*canvasHeight);
 	var point;
 	for (var i = 1; i < length; i++) {
 		point = data[i];
-		ctx.lineTo((point.t-t0)/timeSpan*fullWidth,(0.9 -point.y*0.8)*canvasHeight);
+		ctx.lineTo((parseInt(point.t)-t0)/timeSpan*fullWidth,(0.9 -point.y*0.8)*canvasHeight);
 	}
 	ctx.stroke();
 	ctx.closePath();
 	$labels.empty();
 	var timeLimit = this.timeLimit;
-	var startTime = data[0].t;
-	var endTime = data[length-1].t;
+	var startTime = parseInt(data[0].t);
+	var endTime = parseInt(data[length-1].t);
 	for (var ms = startTime; ms <= endTime; ms += timeLimit/2) {
 		if (endTime - ms <= timeLimit/4 && ms !== startTime) ms = endTime;
 		var s = Math.round(ms/1000);
@@ -165,12 +165,12 @@ BreathResults.prototype.drawCondensedGraph = function(ctx, data, ratio, fullWidt
 	// Draw first sequence
 	ctx.beginPath();
 	var firstPoint = data[0],
-		t0 = firstPoint.t;
+		t0 = parseInt(firstPoint.t);
 	ctx.moveTo(0,(0.9 - firstPoint.y*0.8)*canvasHeight);
 	var point;
 	for (var i = 1; i < length; i++) {
 		point = data[i];
-		var part = (point.t-t0)/timeSpan,
+		var part = (parseInt(point.t)-t0)/timeSpan,
 			x = Math.min(part*fullWidth,0.5*canvasWidth);
 		ctx.lineTo(x,(0.9 -point.y*0.8)*canvasHeight);
 		if (part/ratio > 0.5) break;
@@ -181,12 +181,12 @@ BreathResults.prototype.drawCondensedGraph = function(ctx, data, ratio, fullWidt
 	// Draw last sequence
 	ctx.beginPath();
 	var lastPoint = data[length-1],
-		tl = lastPoint.t;
+		tl = parseInt(lastPoint.t);
 	ctx.moveTo(canvasWidth,(0.9 - lastPoint.y*0.8)*canvasHeight);
 	var point;
 	for (var i = length-2; i >= 0; i--) {
 		point = data[i];
-		var part = (tl-point.t)/timeSpan,
+		var part = (tl-parseInt(point.t))/timeSpan,
 			x = Math.max(canvasWidth-part*fullWidth,0.5*canvasWidth);
 		ctx.lineTo(x,(0.9 -point.y*0.8)*canvasHeight);
 		if (part/ratio > 0.5) break;
@@ -196,14 +196,14 @@ BreathResults.prototype.drawCondensedGraph = function(ctx, data, ratio, fullWidt
 
 	$labels.empty();
 
-	var startTime = firstPoint.t;
+	var startTime = parseInt(firstPoint.t);
 	var s = Math.round(startTime/1000);
 	var m = Math.floor(s/60);
 	s %= 60;
 	var $startLabel = $('<label>' + (m<10?0:'') + m + ':' + (s<10?0:'') + s + '</label>');
 	$startLabel.css({left:0});
 
-	var endTime = data[length-1].t;
+	var endTime = parseInt(data[length-1].t);
 	var s = Math.round(endTime/1000);
 	var m = Math.floor(s/60);
 	s %= 60;
