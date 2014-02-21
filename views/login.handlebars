@@ -31,9 +31,13 @@
         <hr class="prettyline">
         <br>
         <center>
+        {{#if message}}
+          <p><h3>{{message}}</h3></p>
+        {{else}}
         <h1><b>Welcome</b></h1>
         <h3></h3>
         <br>
+        {{/if}}
       <button class="btn btn-primary btn-lg login-button" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Sign In/Register</button>
       <br/><br/>OR<br/><br/>
       <a href="/index">
