@@ -50,11 +50,23 @@ exports.history = function(User) {
       var username = req.session.username;
       if (username != null) {
 
+        models.BreathingSession.find({username: username.toString()}, function(error, sessions) {
+          var length = sessions.length;
+          var today = new Date();
+          var numberOfDays = 14;
+          for (var i = 0; i < length; i++) {
+            var daysBack = Math.floor(Math.random()*numberOfDays);
+            var session = sessions[i];
+            var newDate = new Date();
+            newDate.setDate(newDate.getDate() - daysBack);
+            session.date = newDate;
+            session.save();
+          }
+        });
+
         models.BreathingSession.find({username: username.toString()}).sort([['date','ascending']]).exec(function(error, result) {
           if (error) res.redirect('/');
-
           res.json(result);
-
         });
 
       }      
