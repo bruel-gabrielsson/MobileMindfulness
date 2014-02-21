@@ -148,7 +148,7 @@ BreathResults.prototype.drawFullGraph = function(ctx, data, fullWidth, canvasHei
 		$label.css(css);
 		$labels.append($label);
 	}
-	if (ms !== endTime) {
+	if (ms !== endTime + timeLimit/2) {
 		var s = Math.round(endTime/1000);
 		var m = Math.floor(s/60);
 		s %= 60;
