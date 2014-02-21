@@ -56,10 +56,14 @@ function initializePage() {
 	breathResults.saveData(function(data) {
 		var json = {"data": data};
 		
-		$.post('/breathingsession/new', json, function() {
+		$.post('/breathingsession/new', json, function(response) {
 			$contentPages.hide();
 			$("#progress-page").show();
-			breathProgress.updateSessions.call(breathProgress, true);
+			if (response !== undefined && response.message) {
+				breathProgress.showMessage(response.message);
+			} else {
+				breathProgress.updateSessions.call(breathProgress, true);
+			}
 		});
 	});
 

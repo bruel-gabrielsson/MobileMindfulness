@@ -4,6 +4,7 @@ BreathProgress.prototype.init = function(dayLimit, color, lineWidth) {
 	this.dayLimit = dayLimit; // How many days should fit into the screen
 	this.color = 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
 	this.lineWidth = lineWidth;
+	this.$message = $('<div class="messageDialog"></div>');
 
 	var $graphContainer = $('#progressGraph');
 	if ($graphContainer.length) {
@@ -20,21 +21,31 @@ BreathProgress.prototype.init = function(dayLimit, color, lineWidth) {
 	this.fetched = false;
 };
 
+BreathProgress.prototype.showMessage = function(message) {
+	this.$message.detach();
+	this.$message.html(message);
+	$('#progress-page .page-content').append(this.$message);
+};
+
 BreathProgress.prototype.updateSessions = function(force) {
 	if (!force && this.fetched) {
 		return; // Do not fetch new data if no new data is uploaded
 	}
+	this.$message.detach();
 	this.fetched = true;
 	
 	var self = this;
 	$.get('/breathingsession/history', function(sessions) {
-
 		self.clearSessions();
-		var numberOfSessions = sessions.length;
-		for (var i = 0; i < numberOfSessions; i++) {
-			self.addSession(sessions[i]);
+		if (sessions !== undefined && sessions.message) {
+			self.showMessage(sessions.message);
+		} else {
+			var numberOfSessions = sessions.length;
+			for (var i = 0; i < numberOfSessions; i++) {
+				self.addSession(sessions[i]);
+			}
+			self.populate(sessions);
 		}
-		self.populate(sessions);
 	});
 	
 };
@@ -230,34 +241,4 @@ BreathProgress.prototype.drawGraph = function(ctx, data, fullWidth, canvasHeight
 	}
 
 	this.$scrollable.scrollLeft(fullWidth);
-	/*
-	var timeLimit = this.timeLimit;
-	var startTime = data[0].t;
-	var endTime = data[length-1].t;
-	for (var ms = startTime; ms <= endTime; ms += timeLimit/2) {
-		if (endTime - ms <= timeLimit/4 && ms !== startTime) ms = endTime;
-		var s = Math.round(ms/1000);
-		var m = Math.floor(s/60);
-		s %= 60;
-		var $label = $('<label>' + (m<10?0:'') + m + ':' + (s<10?0:'') + s + '</label>');
-		var css = {};
-		if (ms == endTime) {
-			css.right = 0;
-		} else if (ms == startTime) {
-			css.left = 0;
-		} else {
-			css.left = (ms/endTime*fullWidth);
-		}
-		$label.css(css);
-		$labels.append($label);
-	}
-	if (ms !== endTime) {
-		var s = Math.round(endTime/1000);
-		var m = Math.floor(s/60);
-		s %= 60;
-		var $label = $('<label>' + (m<10?0:'') + m + ':' + (s<10?0:'') + s + '</label>');
-		$label.css({right:0});
-		$labels.append($label);
-	}
-	*/
 }

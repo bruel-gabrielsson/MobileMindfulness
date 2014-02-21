@@ -145,3 +145,17 @@ h2 {
 #loggedInUser .menu ul li:hover, #loggedInUser .menu ul li:active {
 	background: rgba(0,0,0,0.1);
 }
+
+.content-page .messageDialog {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 200px;
+	height: 100px;
+	margin-top: -50px;
+	margin-left: -100px;
+	background: rgba(0,0,0,0.8);
+	border-radius: 5px;
+	color: white;
+	text-align: center;
+}
