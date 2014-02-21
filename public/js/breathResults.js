@@ -17,6 +17,8 @@ BreathResults.prototype.init = function(timeLimit, color, lineWidth) {
 		this.$condensedLabels = $('<div class="labels">');
 		$condensedContainer.append(this.$condensed, this.$condensedLabels);
 		this.condensed = document.getElementById('condensedResultsGraphCanvas');
+		this.$condensedHeader = $('#condensedHeader');
+		this.$condensedContainer = $condensedContainer;
 	}
 };
 
@@ -33,6 +35,9 @@ BreathResults.prototype.populate = function(data, date) {
 	*/
 
 	this.data = data;
+
+	this.$condensedHeader.show();
+	this.$condensedContainer.show();
 
 	if (date !== undefined) {
 		$('#results-page h2').text(new Date(date).toDateString());
@@ -104,10 +109,12 @@ BreathResults.prototype.populate = function(data, date) {
 		this.drawFullGraph(ctx1, data, fullWidth, canvasHeight, timeSpan, this.$fullLabels);
 
 		// Draw condensed graph
-		if (ratio < 1) {
-			this.drawFullGraph(ctx2, data, fullWidth, canvasHeight, timeSpan, this.$condensedLabels);
+		if (ratio < 2) {
+			//this.drawFullGraph(ctx2, data, fullWidth, canvasHeight, timeSpan, this.$condensedLabels);
+			this.$condensedHeader.hide();
+			this.$condensedContainer.hide();
 		} else {
-			this.drawCondensedGraph(ctx2, data, ratio, fullWidth, canvasWidth, canvasHeight, timeSpan, this.$condensedLabels);
+			this.drawCondensedGraph(ctx2, data, ratio, fullWidth, canvasWidth, canvasHeight, timeSpan, self.$condensedLabels);
 		}
 	}
 };
