@@ -64,6 +64,16 @@ function initializePage() {
 
 	});
 
+	var menuVisible = false;
+	$('#loggedInUser .handle').click(function() {
+		if (menuVisible) {
+			$(this).siblings('.menu').clearQueue().slideUp(100);
+		} else {
+			$(this).siblings('.menu').clearQueue().slideDown(100);
+		}
+		menuVisible = !menuVisible;
+	});
+
 	$(".start-button").on("click", function(e) {
 		$contentPages.hide();
 		$('#active-finish-button').attr('disabled', true);
