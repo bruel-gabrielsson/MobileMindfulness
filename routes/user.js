@@ -33,9 +33,10 @@ exports.login = function(User) {
       if (error) res.redirect('/');
 
       if (result.length == 0) { 
-        res.render('user_error', {
-          error: "No such username, please try again"
-        }); 
+        res.render('login', {message: "No such username, please try again"});
+        //res.render('user_error', {
+        //  error: "No such username, please try again"
+        //}); 
       } else {
         var usr = result[0];
 
@@ -46,9 +47,10 @@ exports.login = function(User) {
           res.redirect('/index');
 
         } else {
-          res.render('user_error', {
-            error: "Username and password did not match, please try again or register"
-          }); 
+          res.render('login', {message: "Username and password did not match, please try again or register"});
+          //res.render('user_error', {
+          //  error: "Username and password did not match, please try again or register"
+          //}); 
         }
 
       }
@@ -80,9 +82,10 @@ exports.register = function(User) {
           }
         });
       } else { // Username taken
-        res.render('user_error', {
-          error: "Username taken, please try again"
-        });  
+        res.render('login', {message: "Username taken, please try again"});
+        //res.render('user_error', {
+        //  error: "Username taken, please try again"
+        //});  
       }
     });
   } 
