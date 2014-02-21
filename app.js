@@ -98,21 +98,6 @@ db.once('open', function callback () {
 
   var User = mongoose.model('User', userSchema);
 
-  
-
-  var Rickard = new User({ name: 'Rickard', password: 'hej' });
-  console.log(Rickard.name);
-
-  /*
-  Rickard.save(function (err, Rickard) {
-	if (err) {
-	  console.log("error");
-	} else {	
-	  console.log("success save");
-	}
-  });
-  */
-
   app.get('/user_login', user.login(User));
   app.get('/user_logout', user.logout);
   app.get('/users', user.list(User));
@@ -122,8 +107,6 @@ db.once('open', function callback () {
   app.get('/breathingsession/history', breathingsession.history(User));
 
 });
-
-
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

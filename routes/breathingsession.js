@@ -17,8 +17,7 @@ exports.save = function(User) {
     	var form_data = req.body;
 
 	    var username = req.session.username;
-	    if (username != null) {
-
+	    if (username) {
 	    	User.find({ name: username }, function(error, result) {
 		      if (error) res.redirect('/');
 
@@ -37,28 +36,23 @@ exports.save = function(User) {
             res.send(200);
 		      }
 		    });
-	    }
-
+	    } else {
+        res.json({message:'You have to be logged in to save your results.</br><a href="./">Register here!</a>'});
+      }
 	};
-  
 }
-
 
 exports.history = function(User) {
   return function(req, res) {
-
       var username = req.session.username;
       if (username != null) {
-
         models.BreathingSession.find({username: username.toString()}).sort([['date','ascending']]).exec(function(error, result) {
           if (error) res.redirect('/');
-
           res.json(result);
-
         });
-
-      }      
-
+      } else {
+        res.json({message:'You have to be logged in to see your progress.</br><a href="./">Register here!</a>'});
+      }
   };
 }
 
