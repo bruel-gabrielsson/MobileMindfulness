@@ -28,10 +28,10 @@ BreathProgress.prototype.showMessage = function(message) {
 };
 
 BreathProgress.prototype.updateSessions = function(force) {
-	this.$message.detach();
 	if (!force && this.fetched) {
 		return; // Do not fetch new data if no new data is uploaded
 	}
+	this.$message.detach();
 	this.fetched = true;
 	
 	var self = this;

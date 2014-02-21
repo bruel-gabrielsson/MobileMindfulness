@@ -42,7 +42,6 @@ exports.save = function(User) {
 	};
 }
 
-
 exports.history = function(User) {
   return function(req, res) {
       var username = req.session.username;
