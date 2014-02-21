@@ -52,7 +52,6 @@ exports.history = function(User) {
 
         models.BreathingSession.find({username: username.toString()}, function(error, sessions) {
           var length = sessions.length;
-          var today = new Date();
           var numberOfDays = 14;
           for (var i = 0; i < length; i++) {
             var daysBack = Math.floor(Math.random()*numberOfDays);
