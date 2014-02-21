@@ -26,8 +26,20 @@
 
 <body>
   {{#if username}}
-  <div id="logout-link">
-    <a href="#" >{{username}},</a> <a href="/user_logout">Log Out</a>
+  <div id="loggedInUser">
+    <div class="handle"></div>
+    <div class="menu">
+      <ul>
+        <li>
+          {{username}}
+        </li>
+        <a href="/user_logout">
+          <li>
+            Log Out
+          </li>
+        </a>
+      </ul>
+    </div>
   </div>
   {{/if}}
   <div class="content-page" id="start-page">
