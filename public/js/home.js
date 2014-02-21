@@ -61,17 +61,23 @@ function initializePage() {
 			$("#progress-page").show();
 			breathProgress.updateSessions.call(breathProgress, true);
 		});
-
 	});
 
+	var $userMenu = $('#loggedInUser .menu');
 	var menuVisible = false;
+	var closeMenu = function(){
+		$userMenu.clearQueue().slideUp(100);
+		console.log('closing');
+		menuVisible = false;
+	}
+	$('.page-content').click(function(){if(menuVisible)closeMenu()});
 	$('#loggedInUser .handle').click(function() {
 		if (menuVisible) {
-			$(this).siblings('.menu').clearQueue().slideUp(100);
+			closeMenu();
 		} else {
-			$(this).siblings('.menu').clearQueue().slideDown(100);
+			menuVisible = true;
+			$userMenu.clearQueue().slideDown(100);
 		}
-		menuVisible = !menuVisible;
 	});
 
 	$(".start-button").on("click", function(e) {
