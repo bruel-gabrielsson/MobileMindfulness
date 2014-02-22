@@ -72,6 +72,9 @@ BreathGraph.prototype.loop = function() {
 		showDataLength = 0,
 		color = this.color,
 		lineWidth = this.lineWidth;
+
+	ctx.clearRect(0,0,canvasWidth,canvasHeight);
+
 	var i;
 	for (i = length-1; i >= 0 && (now - data[i].t) < limit; i--) {
 		var x = (1 - (now - data[i].t) / limit),
@@ -88,7 +91,6 @@ BreathGraph.prototype.loop = function() {
 	if (showDataLength > 0) {
 		ctx.strokeStyle = color;
 		ctx.lineWidth = lineWidth;
-		ctx.clearRect(0,0,canvasWidth,canvasHeight);
 		ctx.beginPath();
 		var firstPoint = showData[showDataLength-1];
 		ctx.moveTo(firstPoint.x*canvasWidth,(0.9 - firstPoint.y*0.8)*canvasHeight);
