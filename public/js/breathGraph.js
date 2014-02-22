@@ -103,4 +103,26 @@ BreathGraph.prototype.loop = function() {
 		ctx.stroke();
 		ctx.closePath();
 	}
+
+	var POINTS = 100,
+		GUIDE_COLOR = "#79EBEB",
+		PERIOD = (5/15)*canvasWidth/(2*Math.PI),
+		AMPLITUDE = canvasHeight/2.5;
+
+	ctx.strokeStyle = GUIDE_COLOR;
+	ctx.lineWidth = lineWidth/2;
+	// ctx.setLineDash([1,1]);
+	ctx.beginPath();
+
+	ctx.moveTo(0, 0.5*canvasHeight);
+	var offset = now/limit * canvasWidth;
+
+	for (var i = 0; i < POINTS; i++){
+		var x_val = i*(canvasWidth/POINTS),
+			y_val = -Math.sin((x_val + offset)/PERIOD)*AMPLITUDE + canvasHeight/2;
+		ctx.lineTo(x_val, y_val);
+	}
+	ctx.stroke();
+	ctx.closePath();
+
 };
