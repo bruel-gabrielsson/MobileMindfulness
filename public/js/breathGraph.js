@@ -106,25 +106,27 @@ BreathGraph.prototype.loop = function() {
 		ctx.closePath();
 	}
 
-	var POINTS = 100,
-		GUIDE_COLOR = "#79EBEB",
-		PERIOD = (10000/limit)*canvasWidth/(2*Math.PI),
-		AMPLITUDE = canvasHeight/4;
+	if ($("#breathCheckBox").is(':checked')){
+		var POINTS = 100,
+			GUIDE_COLOR = "#79EBEB",
+			PERIOD = (10000/limit)*canvasWidth/(2*Math.PI),
+			AMPLITUDE = canvasHeight/4;
 
-	ctx.strokeStyle = GUIDE_COLOR;
-	ctx.lineWidth = lineWidth/2;
-	// ctx.setLineDash([1,1]);
-	ctx.beginPath();
+		ctx.strokeStyle = GUIDE_COLOR;
+		ctx.lineWidth = lineWidth/2;
+		// ctx.setLineDash([1,1]);
+		ctx.beginPath();
 
-	ctx.moveTo(0, 0.5*canvasHeight);
-	var offset = now/limit * canvasWidth;
+		ctx.moveTo(0, 0.5*canvasHeight);
+		var offset = now/limit * canvasWidth;
 
-	for (var i = 0; i < POINTS; i++){
-		var x_val = i*(canvasWidth/POINTS),
-			y_val = -Math.sin((x_val + offset)/PERIOD)*AMPLITUDE + canvasHeight/2;
-		ctx.lineTo(x_val, y_val);
+		for (var i = 0; i < POINTS; i++){
+			var x_val = i*(canvasWidth/POINTS),
+				y_val = -Math.sin((x_val + offset)/PERIOD)*AMPLITUDE + canvasHeight/2;
+			ctx.lineTo(x_val, y_val);
+		}
+		ctx.stroke();
+		ctx.closePath();
 	}
-	ctx.stroke();
-	ctx.closePath();
 
 };
