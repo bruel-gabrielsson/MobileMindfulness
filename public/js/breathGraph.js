@@ -108,8 +108,8 @@ BreathGraph.prototype.loop = function() {
 
 	var POINTS = 100,
 		GUIDE_COLOR = "#79EBEB",
-		PERIOD = (5/15)*canvasWidth/(2*Math.PI),
-		AMPLITUDE = canvasHeight/2.5;
+		PERIOD = (10000/limit)*canvasWidth/(2*Math.PI),
+		AMPLITUDE = canvasHeight/4;
 
 	ctx.strokeStyle = GUIDE_COLOR;
 	ctx.lineWidth = lineWidth/2;
