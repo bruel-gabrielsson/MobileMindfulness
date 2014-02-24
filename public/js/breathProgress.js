@@ -35,7 +35,7 @@ BreathProgress.prototype.updateSessions = function(force) {
 	this.fetched = true;
 
 	// Show the loading page
-	$(".loading").show();
+	$("#loading").show();
 	
 	var self = this;
 	$.get('/breathingsession/history', function(sessions) {
@@ -51,7 +51,8 @@ BreathProgress.prototype.updateSessions = function(force) {
 			self.populate(sessions);
 
 			// Take loading page away
-			$(".loading").hide();
+			$("#loading").hide();
+			
 		}
 	});
 	
