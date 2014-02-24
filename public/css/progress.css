@@ -103,8 +103,8 @@
 	z-index: 10;
 }
 
-.page-content #loading:after {
-	content: '';
+.page-content .overlay {
+	display: none;
 	position: absolute;
 	top: 0;
 	bottom: 0;
