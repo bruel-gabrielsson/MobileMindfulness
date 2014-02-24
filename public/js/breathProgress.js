@@ -42,7 +42,7 @@ BreathProgress.prototype.updateSessions = function(force) {
 		self.clearSessions();
 		if (sessions !== undefined && sessions.message) {
 			self.showMessage(sessions.message);
-			$(".loading").hide();
+			$("#loading").hide();
 		} else {
 			var numberOfSessions = sessions.length;
 			for (var i = 0; i < numberOfSessions; i++) {
