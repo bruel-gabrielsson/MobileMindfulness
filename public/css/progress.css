@@ -103,7 +103,7 @@
 	z-index: 10;
 }
 
-.page-content .overlay {
+.page-content .loading-overlay {
 	display: none;
 	position: absolute;
 	top: 0;

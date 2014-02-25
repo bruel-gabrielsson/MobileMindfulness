@@ -36,7 +36,7 @@ BreathProgress.prototype.updateSessions = function(force) {
 
 	// Show the loading page
 	$("#loading").show();
-	$(".overlay").show();
+	$(".loading-overlay").show();
 	
 	var self = this;
 	$.get('/breathingsession/history', function(sessions) {
@@ -44,7 +44,7 @@ BreathProgress.prototype.updateSessions = function(force) {
 		if (sessions !== undefined && sessions.message) {
 			self.showMessage(sessions.message);
 			$("#loading").hide();
-			$(".overlay").hide();
+			$(".loading-overlay").hide();
 
 		} else {
 			var numberOfSessions = sessions.length;
@@ -55,7 +55,7 @@ BreathProgress.prototype.updateSessions = function(force) {
 
 			// Take loading page away
 			$("#loading").hide();
-			$(".overlay").hide();
+			$(".loading-overlay").hide();
 			
 		}
 	});
