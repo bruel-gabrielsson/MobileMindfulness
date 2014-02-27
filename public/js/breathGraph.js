@@ -1,9 +1,11 @@
 var BreathGraph = function() {};
 
-BreathGraph.prototype.init = function(historyLimit, color, lineWidth) {
+BreathGraph.prototype.init = function(historyLimit, color, lineWidth, idealPeriod, idealColor) {
 	this.historyLimit = historyLimit;
+	this.idealPeriod = idealPeriod;
 	this.onStartCallbacks = [];
 	this.color = 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
+	this.idealColor = 'rgb(' + idealColor[0] + ',' + idealColor[1] + ',' + idealColor[2] + ')';
 	this.lineWidth = lineWidth;
 
 	var $container = $('#breathGraph');
@@ -11,6 +13,8 @@ BreathGraph.prototype.init = function(historyLimit, color, lineWidth) {
 		this.$canvas = $('<canvas id="breathGraphCanvas">');
 		$container.append(this.$canvas);
 		
+		this.$guidanceToggle = $('#guidanceCheckbox');
+
 		this.canvas = document.getElementById('breathGraphCanvas');
 		this.iv;
 		this.reset();
@@ -69,7 +73,6 @@ BreathGraph.prototype.loop = function() {
 		now = new Date().getTime() - this.startTime,
 		canvasWidth = this.canvasWidth,
 		canvasHeight = this.canvasHeight,
-		showDataLength = 0,
 		color = this.color,
 		lineWidth = this.lineWidth;
 
@@ -80,17 +83,49 @@ BreathGraph.prototype.loop = function() {
 		var x = (1 - (now - data[i].t) / limit),
 			y = data[i].y;
 		showData.push({x:x,y:y});
-		showDataLength++;
 	}
-	if (showDataLength > 1 && i >= 0) {
+	if (showData.length > 1 && i >= 0) {
 		var x = (1 - (now - data[i].t) / limit),
 			y = data[i].y;
 		showData.push({x:x,y:y});
-		showDataLength++;
 	}
+	if (!showData.length && data.length > 1) {
+		var x = 0,
+			y = i >= 0 ? data[i].y : 0.5;
+		showData.push({x:x,y:y});
+		showData.push({x:x,y:y});
+		showData.push({x:x,y:y});
+	}
+	var showDataLength = showData.length;
 	if (showDataLength > 0) {
-		ctx.strokeStyle = color;
+		if (this.$guidanceToggle.length && this.$guidanceToggle.is(':checked')){
+			var POINTS = 100,
+				GUIDE_COLOR = this.idealColor,
+				PERIOD = (this.idealPeriod/limit)*canvasWidth/(2*Math.PI),
+				AMPLITUDE = canvasHeight*0.4;
+
+			ctx.strokeStyle = GUIDE_COLOR;
+			ctx.lineWidth = lineWidth/2;
+			ctx.beginPath();
+
+			var offset = now/limit * canvasWidth;
+			var initI = (now < limit) ? POINTS*(1-now/limit) : 0;
+			var initX = initI*(canvasWidth/POINTS);
+			initI = Math.floor(initI);
+			ctx.moveTo(initX, Math.sin((offset + initX)/PERIOD)*AMPLITUDE + canvasHeight/2);
+
+			for (var i = initI+1; i < POINTS; i++){
+				var x_val = i*(canvasWidth/POINTS),
+					y_val = Math.sin((x_val + offset)/PERIOD)*AMPLITUDE + canvasHeight/2;
+				ctx.lineTo(x_val, y_val);
+			}
+			ctx.stroke();
+			ctx.closePath();
+		}
+
 		ctx.lineWidth = lineWidth;
+		ctx.strokeStyle = color;
+
 		ctx.beginPath();
 		var firstPoint = showData[showDataLength-1];
 		ctx.moveTo(firstPoint.x*canvasWidth,(0.9 - firstPoint.y*0.8)*canvasHeight);
@@ -104,31 +139,5 @@ BreathGraph.prototype.loop = function() {
 		}
 		ctx.stroke();
 		ctx.closePath();
-
-		if ($("#breathCheckBox").is(':checked')){
-			var POINTS = 100,
-				GUIDE_COLOR = "#79EBEB",
-				PERIOD = (10000/limit)*canvasWidth/(2*Math.PI),
-				AMPLITUDE = canvasHeight/4;
-
-			ctx.strokeStyle = GUIDE_COLOR;
-			ctx.lineWidth = lineWidth/2;
-			// ctx.setLineDash([1,1]);
-			ctx.beginPath();
-
-			ctx.moveTo(0, 0.5*canvasHeight);
-			var offset = now/limit * canvasWidth;
-
-			for (var i = 0; i < POINTS; i++){
-				var x_val = i*(canvasWidth/POINTS),
-					y_val = -Math.sin((x_val + offset)/PERIOD)*AMPLITUDE + canvasHeight/2;
-				ctx.lineTo(x_val, y_val);
-			}
-			ctx.stroke();
-			ctx.closePath();
-		}
-
 	}
-
-
 };

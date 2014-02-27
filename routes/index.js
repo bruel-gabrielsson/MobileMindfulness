@@ -4,8 +4,17 @@
 exports.view = function(req, res){
 	console.log("Index");
 	res.render('index', {
-    title: 'MobileMindfulness',
-    username: req.session.username
-  });
+    	title: 'MobileMindfulness',
+    	guidance: false,
+    	username: req.session.username
+	});
+};
 
+exports.viewGuidance = function(req, res){
+	console.log("Index");
+	res.render('index', {
+		title: 'MobileMindfulness',
+		guidance: true,
+		username: req.session.username
+	});
 };
