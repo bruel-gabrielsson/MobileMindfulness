@@ -33,18 +33,30 @@ BreathProgress.prototype.updateSessions = function(force) {
 	}
 	this.$message.detach();
 	this.fetched = true;
+
+	// Show the loading page
+	$("#loading").show();
+	$(".loading-overlay").show();
 	
 	var self = this;
 	$.get('/breathingsession/history', function(sessions) {
 		self.clearSessions();
 		if (sessions !== undefined && sessions.message) {
 			self.showMessage(sessions.message);
+			$("#loading").hide();
+			$(".loading-overlay").hide();
+
 		} else {
 			var numberOfSessions = sessions.length;
 			for (var i = 0; i < numberOfSessions; i++) {
 				self.addSession(sessions[i]);
 			}
 			self.populate(sessions);
+
+			// Take loading page away
+			$("#loading").hide();
+			$(".loading-overlay").hide();
+			
 		}
 	});
 	

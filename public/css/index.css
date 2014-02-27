@@ -13,6 +13,10 @@ body {
 	z-index: 5;
 }
 
+#preCanvas {
+	height: 100%;
+}
+
 h2 {
 	padding: 0 15px;
 	font-size: 25px;
