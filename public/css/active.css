@@ -89,3 +89,62 @@
 #instructions p{
 	text-align: center;
 }
+
+#guidanceCheckbox {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 0;
+	height: 0;
+	z-index: 11;
+	cursor: pointer;
+}
+
+#guidanceCheckbox:before {
+	content: 'Show Guidance';
+	white-space: nowrap;
+	background: #333;
+	position: absolute;
+	right: 0;
+	border-radius: 6px;
+	text-align: center;
+	padding: 20px 45px 20px 20px;
+	z-index: 12;
+	color: white;
+	font-size: 18px;
+	line-height: 1.33;
+	-webkit-transition: 0.25s;
+	transition: 0.25s;
+}
+
+#guidanceCheckbox:after {
+	content: '';
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	background: #555;
+	position: absolute;
+	right: 10px;
+	top: 19px;
+	z-index: 13;
+	background-size: 70%;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	-webkit-transition: 0.25s;
+	transition: 0.25s;
+}
+
+#guidanceCheckbox:checked:after {
+	background-color: #00ff84;
+	background-image: url('../images/checkmark.png');
+}
+
+#guidanceCheckbox:checked:before {
+	background: #444;
+}
+
+@media all and (max-width: 430px) {
+	#guidanceCheckbox:before {
+		content: 'Guidance';
+	}
+}
