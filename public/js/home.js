@@ -17,7 +17,9 @@ function initializePage() {
 	var color0 = [0,95,150],
 		color1 = [0,255,132];
 	var historyLimit = 15000, // Show the last 15 seconds in the graph
+		idealBreathingPeriod = 10000,
 		activeLineColor = [255,255,255],
+		idealLineColor = [0,255,132],
 		resultLineColor = [255,255,255],
 		lineWidth = 2,
 		progressLimit = 10; // The number of days that sould fit into the progress graph
@@ -28,7 +30,7 @@ function initializePage() {
 	var breathProgress = new BreathProgress();
 	
 	breathCanvas.init(color0, color1);
-	breathGraph.init(historyLimit,activeLineColor,lineWidth);
+	breathGraph.init(historyLimit,activeLineColor,lineWidth,idealBreathingPeriod,idealLineColor);
 	breathResults.init(historyLimit*2,resultLineColor,lineWidth);
 	breathProgress.init(progressLimit,activeLineColor,lineWidth);
 
