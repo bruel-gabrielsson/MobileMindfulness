@@ -8,3 +8,8 @@
 .login-button {
 	width: 100%;
 }
+
+#try-out-button {
+	color: white;
+	background-color: lightgreen;
+}
