@@ -46,9 +46,6 @@
 	bottom: 0;
 }
 
-#instructions_content{
-	padding-left: 2%;
-}
 
 #breathGraph {
 	position: absolute;
@@ -68,12 +65,13 @@
 	color: #aee1ff;
 }
 
-.tapToHide {
+#instructions .tapToHide {
 	position: absolute;
 	bottom: 5px;
 	text-align: center;
 	left: 0;
 	right: 0;
+	font-size: 12px;
 }
 
 .instructHeader {
@@ -83,11 +81,19 @@
 }
 
 #instructions h3{
-	margin-bottom: 50px;
+	margin-top: 15px;
+	margin-bottom: 15px;
 }
 
 #instructions p{
 	text-align: center;
+	font-size: 16px;
+	font-weight: 200;
+	margin-bottom: 2px;
+}
+
+#instructions p.arrow {
+	font-size: 30px;
 }
 
 #guidanceCheckbox {
