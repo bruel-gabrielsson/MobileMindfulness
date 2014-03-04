@@ -2,7 +2,7 @@
 	overflow-x: hidden;
 	overflow-y: auto;
 	position: absolute;
-	top: 120px;
+	top: 135px;
 	bottom: 0;
 	left: 0;
 	right: 0;
@@ -29,6 +29,13 @@
 
 .session .duration {
 	float: right;
+	padding-left: 20px;
+	min-width: 90px;
+	background-image: url('../images/stopwatch.png');
+	background-repeat: no-repeat;
+	background-position: left center;
+	background-size: contain;
+	text-align: right;
 }
 
 #progressGraph {
@@ -56,6 +63,16 @@
 	position: absolute;
 	font-weight: normal;
 	text-align: center;
+}
+
+#progress-page .labels.y-axis:before {
+	content: '(min)';
+	font-size: 10px;
+	position: absolute;
+	top: -10px;
+	text-align: center;
+	right: 0;
+	left: 0;
 }
 
 #progress-page .labels:not(.y-axis) label {
@@ -114,3 +131,8 @@
 	z-index: 9;
 }
 
+#progress-page .page-content > h5 {
+	font-size: 16px;
+	text-align: center;
+	margin: 0 0 5px;
+}
