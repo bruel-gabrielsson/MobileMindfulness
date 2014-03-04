@@ -103,6 +103,15 @@ BreathResults.prototype.populate = function(data, date) {
 		if (avg > 0) {
 			var s = Math.round(avg/10)/100;
 			this.$average.text(s + 's');
+
+			// Google Analytics Custom Metrics
+			var duration = 'metric1',
+				avgBreath = 'metric2';
+
+			ga('send', 'event', 'breathingsession', 'finish', {
+				duration: dt,
+				avgBreath: avg
+			});
 		} else {
 			this.$average.text('');
 		}
