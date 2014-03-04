@@ -101,14 +101,15 @@ BreathGraph.prototype.loop = function() {
 		if (this.$guidanceToggle.length && this.$guidanceToggle.is(':checked')){
 			var POINTS = 100,
 				GUIDE_COLOR = this.idealColor,
-				PERIOD = (this.idealPeriod/limit)*canvasWidth/(2*Math.PI),
+				WAVELENGTH = (this.idealPeriod/limit)*canvasWidth,
+				PERIOD = WAVELENGTH/(2*Math.PI),
 				AMPLITUDE = canvasHeight*0.4;
 
 			ctx.strokeStyle = GUIDE_COLOR;
 			ctx.lineWidth = lineWidth/2;
 			ctx.beginPath();
 
-			var offset = now/limit * canvasWidth;
+			var offset = now/limit * canvasWidth - WAVELENGTH/4; /*the second term causes the graph to start at the trough*/
 			var initI = (now < limit) ? POINTS*(1-now/limit) : 0;
 			var initX = initI*(canvasWidth/POINTS);
 			initI = Math.floor(initI);
