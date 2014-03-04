@@ -45,68 +45,63 @@ BreathGraph.prototype.start = function() {
 
 BreathGraph.prototype.stop = function() {
 	clearInterval(this.iv);
-	console.log("Number of peaks detected: " + BreathGraph.getNumPeaks(this.data));
-	console.log("Average length of breath (ms): " + BreathGraph.getAvgBreathLength(this.data));
+	console.log("Number of peaks detected: " + this.getNumPeaks(this.data));
+	console.log("Average length of breath (ms): " + this.getAvgBreathLength(this.data));
 	return this.data;
 };
 
-BreathGraph.getAvgBreathLength = function(data) {
+BreathGraph.prototype.getAvgBreathLength = function(data) {
 	var totalTime = data[data.length - 1].t - data[0].t;
-	var numPeaks = BreathGraph.getNumPeaks(data);
+	var numPeaks = this.getNumPeaks(data);
 	if (numPeaks > 0)
 		return totalTime/numPeaks;
 	else 
 		return 0;
 }
 
-BreathGraph.getNumPeaks = function(data) {
+BreathGraph.prototype.getNumPeaks = function(data) {
 	var DEBUG = 0; // turns on/off debugging print statements
 	// Parameters
-	var MIN_TOTAL_PEEK_TIME = 1000, /*minimum amount of consecutive time (in ms) graph must have 
-									  been rising and then falling
-							   		  for a region to be considered a peak.*/
-		MIN_TIME_ON_RISE = 200, /*minimum time graph must have spent just rising (in ms)*/
-		MIN_TIME_ON_FALL = 200; /*minimum time graph must have spent just falling (in ms)*/
+	var totalHeightSpan = 0.8,
+		min_dy = totalHeightSpan/4;
 
 	// Initialization
 	var numPeaks = 0,
 		peakDetected = false,
-		time_in_rise = 0,
-		time_in_fall = 0,
-		delta_y = Math.floor(data[1].y*1000) - Math.floor(data[0].y*1000),
-		delta_t = data[1].t - data[0].t;
-	var graph_is_rising;
-	if (delta_y >= 0) graph_is_rising = true;
-	else graph_is_rising = false;
+		rising_dy = 0,
+		falling_dy = 0,
+		delta_y = data[1].y - data[0].y;
+	if (delta_y > 0) {
+		rising_dy = delta_y; // graph is rising
+	}
 
 	if (data.length < 3) return 0;
 
 	for (var i = 2; i < data.length; i++){
-		delta_y = Math.floor(data[i].y*1000) - Math.floor(data[i-1].y*1000);
-		delta_t = data[i].t - data[i-1].t;
-		if (delta_y >= 0){
-			if (!graph_is_rising) {
-				//Every time we go from falling to rising, reset everything.
-				time_in_rise = 0;
-				time_in_fall = 0;
-				peakDetected = false;
+		delta_y = data[i].y - data[i-1].y;
+		if (delta_y > 0){
+			// graph is rising
+			if (falling_dy) {
+				// graph was falling => reset
+				falling_dy = 0;
+				rising_dy = delta_y;
+			} else {
+				rising_dy += delta_y;
 			}
-			time_in_rise += delta_t;
-			graph_is_rising = true;
-		}
-
-		else { /*graph is falling*/
-			time_in_fall += delta_t;
-			if (!peakDetected){
-				if (time_in_rise + time_in_fall >= MIN_TOTAL_PEEK_TIME
-					&& time_in_rise >= MIN_TIME_ON_RISE
-					&& time_in_fall >= MIN_TIME_ON_FALL){
+		} else if (delta_y < 0) {
+			// graph is falling
+			falling_dy -= delta_y;
+			if (rising_dy > min_dy) {
+				// graph was rising => possible peak
+				if (falling_dy > min_dy) {
+					// peak detected => reset
 					numPeaks++;
-					peakDetected = true; /*to avoid double counting the same peak*/
-					if (DEBUG) console.log("Peak detected just before time " + data[i].t + ". Number of peaks: " + numPeaks);
+					rising_dy = 0;
 				}
+			} else {
+				// no peak => reset
+				rising_dy = 0;
 			}
-			graph_is_rising = false;
 		}
 	}
 
