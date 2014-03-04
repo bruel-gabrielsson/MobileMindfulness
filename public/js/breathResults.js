@@ -7,6 +7,9 @@ BreathResults.prototype.init = function(timeLimit, color, lineWidth) {
 
 	var $fullGraphContainer = $('#resultsGraph');
 	if ($fullGraphContainer.length) {
+		this.$duration = $('#duration');
+		this.$average = $('#averageBreath');
+
 		this.$fullGraph = $('<canvas id="resultsGraphCanvas">');
 		this.$fullLabels = $('<div class="labels">');
 		$fullGraphContainer.append(this.$fullGraph, this.$fullLabels);
@@ -23,17 +26,7 @@ BreathResults.prototype.init = function(timeLimit, color, lineWidth) {
 };
 
 BreathResults.prototype.populate = function(data, date) {
-
-	/*
-	function replacer(key, value) {
-	    if (typeof value === 'number' && !isFinite(value)) {
-	        return String(value);
-	    }
-	    return value;
-	}
-	console.log(JSON.stringify(data, replacer));
-	*/
-
+	var self = this;
 	this.data = data;
 
 	this.$condensedHeader.show();
@@ -100,6 +93,18 @@ BreathResults.prototype.populate = function(data, date) {
 		this.fullGraph.width = fullWidth;
 		this.fullGraph.height = canvasHeight;
 
+		// Show basic statistics
+		var dt = data[length-1].t - data[0].t;
+		var s = Math.round(dt/1000);
+		var m = Math.floor(s/60);
+		this.$duration.text((m>0?(m + 'm'):'') + (m>0&&s>0?' ':'') + (s>0?(s + 's'):''));
+		var avg = this.getAvgBreathLength(data);
+		if (avg > 0) {
+			var s = Math.round(avg/10)/100;
+			this.$average.text(s + 's');
+		} else {
+			this.$average.text('');
+		}
 
 		// Get graph properties
 		var color = this.color,
@@ -235,3 +240,62 @@ BreathResults.prototype.saveData = function(callback) {
 		callback(self.data);
 	});
 };
+
+BreathResults.prototype.getAvgBreathLength = function(data) {
+	var totalTime = data[data.length - 1].t - data[0].t;
+	var numPeaks = this.getNumPeaks(data);
+	if (numPeaks > 0)
+		return totalTime/numPeaks;
+	else 
+		return 0;
+}
+
+BreathResults.prototype.getNumPeaks = function(data) {
+	var DEBUG = 0; // turns on/off debugging print statements
+	// Parameters
+	var totalHeightSpan = 0.8,
+		min_dy = totalHeightSpan/4;
+
+	// Initialization
+	var numPeaks = 0,
+		rising_dy = 0,
+		falling_dy = 0,
+		delta_y = data[1].y - data[0].y;
+	if (delta_y > 0) {
+		rising_dy = delta_y; // graph is rising
+	}
+
+	if (data.length < 3) return 0;
+
+	for (var i = 2; i < data.length; i++){
+		delta_y = data[i].y - data[i-1].y;
+		if (delta_y > 0){
+			// graph is rising
+			if (falling_dy) {
+				// graph was falling => reset
+				falling_dy = 0;
+				rising_dy = delta_y;
+			} else {
+				rising_dy += delta_y;
+			}
+		} else if (delta_y < 0) {
+			// graph is falling
+			falling_dy -= delta_y;
+			if (rising_dy > min_dy) {
+				// graph was rising => possible peak
+				if (falling_dy > min_dy) {
+					// peak detected => reset
+					numPeaks++;
+					rising_dy = 0;
+				}
+			} else {
+				// no peak => reset
+				rising_dy = 0;
+			}
+		}
+	}
+
+	if (DEBUG) console.log(data);
+
+	return numPeaks;
+}

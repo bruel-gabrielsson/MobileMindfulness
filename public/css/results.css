@@ -36,3 +36,38 @@
 	right: 50%;
 	border-right: 3px solid white;
 }
+
+#basicStatistics {
+	overflow: hidden;
+}
+
+#basicStatistics h4 {
+	margin: 0;
+}
+
+#basicStatistics p {
+	font-size: 30px;
+	height: 35px;
+	margin: 0;
+}
+
+.half {
+	float: left;
+	width: 50%;
+	text-align: center;
+}
+
+#condensedResultsGraph span {
+	position:absolute;
+	bottom:-20px;
+}
+
+#condensedResultsGraph span:first-child {
+	left: 10%;
+}
+
+#condensedResultsGraph span:last-child {
+	right: 10%;
+}
+
+

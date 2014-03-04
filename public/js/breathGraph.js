@@ -45,70 +45,8 @@ BreathGraph.prototype.start = function() {
 
 BreathGraph.prototype.stop = function() {
 	clearInterval(this.iv);
-	console.log("Number of peaks detected: " + this.getNumPeaks(this.data));
-	console.log("Average length of breath (ms): " + this.getAvgBreathLength(this.data));
 	return this.data;
 };
-
-BreathGraph.prototype.getAvgBreathLength = function(data) {
-	var totalTime = data[data.length - 1].t - data[0].t;
-	var numPeaks = this.getNumPeaks(data);
-	if (numPeaks > 0)
-		return totalTime/numPeaks;
-	else 
-		return 0;
-}
-
-BreathGraph.prototype.getNumPeaks = function(data) {
-	var DEBUG = 0; // turns on/off debugging print statements
-	// Parameters
-	var totalHeightSpan = 0.8,
-		min_dy = totalHeightSpan/4;
-
-	// Initialization
-	var numPeaks = 0,
-		peakDetected = false,
-		rising_dy = 0,
-		falling_dy = 0,
-		delta_y = data[1].y - data[0].y;
-	if (delta_y > 0) {
-		rising_dy = delta_y; // graph is rising
-	}
-
-	if (data.length < 3) return 0;
-
-	for (var i = 2; i < data.length; i++){
-		delta_y = data[i].y - data[i-1].y;
-		if (delta_y > 0){
-			// graph is rising
-			if (falling_dy) {
-				// graph was falling => reset
-				falling_dy = 0;
-				rising_dy = delta_y;
-			} else {
-				rising_dy += delta_y;
-			}
-		} else if (delta_y < 0) {
-			// graph is falling
-			falling_dy -= delta_y;
-			if (rising_dy > min_dy) {
-				// graph was rising => possible peak
-				if (falling_dy > min_dy) {
-					// peak detected => reset
-					numPeaks++;
-					rising_dy = 0;
-				}
-			} else {
-				// no peak => reset
-				rising_dy = 0;
-			}
-		}
-	}
-
-	if (DEBUG) console.log(data);
-
-	return numPeaks;
-}
 
 BreathGraph.prototype.appendData = function(y) {
 	var self = this;
