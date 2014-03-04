@@ -109,7 +109,12 @@ BreathGraph.prototype.loop = function() {
 			ctx.lineWidth = lineWidth/2;
 			ctx.beginPath();
 
-			var offset = now/limit * canvasWidth - WAVELENGTH/4; /*the second term causes the graph to start at the trough*/
+			/*Shift the graph to make it start at a trough, which corresponds to a PEAK of the sine graph,
+			since the y-axis is inverted!*/
+			var wavelength_remainder = canvasWidth - Math.floor(canvasWidth/WAVELENGTH)*WAVELENGTH;
+			var initOffset = -1*wavelength_remainder + 1/4*WAVELENGTH;
+
+			var offset = now/limit * canvasWidth + initOffset; /*the second term causes the graph to start at the trough*/
 			var initI = (now < limit) ? POINTS*(1-now/limit) : 0;
 			var initX = initI*(canvasWidth/POINTS);
 			initI = Math.floor(initI);
