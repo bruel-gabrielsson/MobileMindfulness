@@ -17,7 +17,7 @@ function initializePage() {
 	var color0 = [0,95,150],
 		color1 = [0,255,132];
 	var historyLimit = 15000, // Show the last 15 seconds in the graph
-		idealBreathingPeriod = 10000,
+		idealBreathingPeriod = 6000,
 		activeLineColor = [255,255,255],
 		idealLineColor = [0,255,132],
 		resultLineColor = [255,255,255],
