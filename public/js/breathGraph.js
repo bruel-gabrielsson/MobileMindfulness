@@ -82,7 +82,9 @@ BreathGraph.getNumPeaks = function(data) {
 	if (data.length < 3) return 0;
 
 	for (var i = 2; i < data.length; i++){
-		delta_y = Math.floor(data[i].y*1000) - Math.floor(data[i-1].y*1000);
+		y_current = Math.floor(data[i].y*1000);
+		y_prev = Math.floor(data[i-1].y*1000);
+		delta_y = y_current - y_prev;
 		delta_t = data[i].t - data[i-1].t;
 		if (delta_y >= 0){
 			if (!graph_is_rising) {
