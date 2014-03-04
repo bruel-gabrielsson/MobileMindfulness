@@ -63,11 +63,11 @@
 }
 
 #condensedResultsGraph span:first-child {
-	left: 10%;
+	left: 10px;
 }
 
-#condensedResultsGraph span:last-child {
-	right: 10%;
+#condensedResultsGraph span:nth-child(2) {
+	right: 10px;
 }
 
 
