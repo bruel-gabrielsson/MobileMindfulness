@@ -5,6 +5,8 @@ BreathResults.prototype.init = function(timeLimit, color, lineWidth) {
 	this.color = 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
 	this.lineWidth = lineWidth;
 
+	this.guidance = $('#guidanceCheckbox').length > 0;
+
 	var $fullGraphContainer = $('#resultsGraph');
 	if ($fullGraphContainer.length) {
 		this.$duration = $('#duration');
@@ -105,13 +107,12 @@ BreathResults.prototype.populate = function(data, date) {
 			this.$average.text(s + 's');
 
 			// Google Analytics Custom Metrics
-			var duration = 'metric1',
-				avgBreath = 'metric2';
+			var prefix = self.guidance ? 'guidance' : 'index',
+				page = '/' + prefix;
+			ga('send', 'timing', 'breathingsession', 'duration', dt, prefix+'Dur', {'page':page});
+			ga('send', 'timing', 'breathingsession', 'avgbreath', Math.round(avg), prefix+'Breath', {'page':page});
+			ga('send', 'event', 'breathingsession', 'finish');
 
-			ga('send', 'event', 'breathingsession', 'finish', {
-				duration: dt,
-				avgBreath: avg
-			});
 		} else {
 			this.$average.text('');
 		}
