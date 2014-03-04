@@ -46,9 +46,6 @@
 	bottom: 0;
 }
 
-#instructions_content{
-	padding-left: 2%;
-}
 
 #breathGraph {
 	position: absolute;
@@ -68,12 +65,13 @@
 	color: #aee1ff;
 }
 
-.tapToHide {
+#instructions .tapToHide {
 	position: absolute;
 	bottom: 5px;
 	text-align: center;
 	left: 0;
 	right: 0;
+	font-size: 12px;
 }
 
 .instructHeader {
@@ -83,19 +81,25 @@
 }
 
 #instructions h3{
-	margin-bottom: 50px;
+	margin-top: 15px;
+	margin-bottom: 15px;
 }
 
 #instructions p{
 	text-align: center;
+	font-size: 16px;
+	font-weight: 200;
+	margin-bottom: 2px;
+}
+
+#instructions p.arrow {
+	font-size: 30px;
 }
 
 #guidanceCheckbox {
 	position: absolute;
-	right: 0;
-	top: 0;
-	width: 0;
-	height: 0;
+	right: 10px;
+	top: 10px;
 	z-index: 11;
 	cursor: pointer;
 }
@@ -105,10 +109,11 @@
 	white-space: nowrap;
 	background: #333;
 	position: absolute;
-	right: 0;
+	top: -10px;
+	right: -10px;
 	border-radius: 6px;
 	text-align: center;
-	padding: 20px 45px 20px 20px;
+	padding: 20px 40px 20px 15px;
 	z-index: 12;
 	color: white;
 	font-size: 18px;
@@ -124,8 +129,8 @@
 	border-radius: 50%;
 	background: #555;
 	position: absolute;
-	right: 10px;
-	top: 19px;
+	right: 0;
+	top: 9px;
 	z-index: 13;
 	background-size: 70%;
 	background-repeat: no-repeat;
