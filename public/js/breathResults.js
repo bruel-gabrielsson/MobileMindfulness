@@ -97,6 +97,7 @@ BreathResults.prototype.populate = function(data, date) {
 		var dt = data[length-1].t - data[0].t;
 		var s = Math.round(dt/1000);
 		var m = Math.floor(s/60);
+		s %= 60;
 		this.$duration.text((m>0?(m + 'm'):'') + (m>0&&s>0?' ':'') + (s>0?(s + 's'):''));
 		var avg = this.getAvgBreathLength(data);
 		if (avg > 0) {
