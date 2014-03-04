@@ -35,7 +35,7 @@ BreathCanvas.prototype.init = function(color0, color1) {
 					to = setTimeout(self.showThumb.bind(self), 3000);
 				} else {
 					e.preventDefault();
-					self.$canvas.scrollTop(0);
+					self.$canvas.scrollTop(50); //Half the circle height
 				}
 			});
 
@@ -50,9 +50,8 @@ BreathCanvas.prototype.reset = function(callback) {
 	var self = this;
 	this.started = false;
 	this.hideThumb = false;
-	this.$canvas.scrollTop(0);
+	this.$canvas.scrollTop(50); //Half the circle height
 	this.showThumb();
-	// this.showInstructions();
 	setTimeout(function(){
 		self.hideThumb = true;
 		if (callback !== undefined) {
