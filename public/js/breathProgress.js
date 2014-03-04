@@ -56,7 +56,6 @@ BreathProgress.prototype.updateSessions = function(force) {
 			// Take loading page away
 			$("#loading").hide();
 			$(".loading-overlay").hide();
-			
 		}
 	});
 	
