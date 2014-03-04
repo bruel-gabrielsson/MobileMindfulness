@@ -62,17 +62,21 @@ BreathGraph.getAvgBreathLength = function(data) {
 BreathGraph.getNumPeaks = function(data) {
 	var DEBUG = 0; // turns on/off debugging print statements
 	// Parameters
-	var MIN_TOTAL_PEEK_TIME = 1000, /*minimum amount of consecutive time (in ms) graph must have 
+	var MINUS_INF = -10000000,
+		MIN_TOTAL_PEEK_TIME = 1000, /*minimum amount of consecutive time (in ms) graph must have 
 									  been rising and then falling
 							   		  for a region to be considered a peak.*/
 		MIN_TIME_ON_RISE = 200, /*minimum time graph must have spent just rising (in ms)*/
-		MIN_TIME_ON_FALL = 200; /*minimum time graph must have spent just falling (in ms)*/
+		MIN_TIME_ON_FALL = 200, /*minimum time graph must have spent just falling (in ms)*/
+		MIN_PEAK_HEIGHT = 200; /*minimum amount graph must fall from local max 
+								for max to be a peak*/
 
 	// Initialization
 	var numPeaks = 0,
 		peakDetected = false,
 		time_in_rise = 0,
 		time_in_fall = 0,
+		local_max = MINUS_INF,
 		delta_y = Math.floor(data[1].y*1000) - Math.floor(data[0].y*1000),
 		delta_t = data[1].t - data[0].t;
 	var graph_is_rising;
@@ -91,6 +95,7 @@ BreathGraph.getNumPeaks = function(data) {
 				//Every time we go from falling to rising, reset everything.
 				time_in_rise = 0;
 				time_in_fall = 0;
+				local_max = MINUS_INF;
 				peakDetected = false;
 			}
 			time_in_rise += delta_t;
@@ -98,14 +103,20 @@ BreathGraph.getNumPeaks = function(data) {
 		}
 
 		else { /*graph is falling*/
+			if (graph_is_rising) { 
+				//Coming down from a local max
+				local_max = y_prev;
+			}
 			time_in_fall += delta_t;
 			if (!peakDetected){
 				if (time_in_rise + time_in_fall >= MIN_TOTAL_PEEK_TIME
-					&& time_in_rise >= MIN_TIME_ON_RISE
-					&& time_in_fall >= MIN_TIME_ON_FALL){
+					// && time_in_rise >= MIN_TIME_ON_RISE
+					// && time_in_fall >= MIN_TIME_ON_FALL
+					&& (local_max - y_current >= MIN_PEAK_HEIGHT)){
 					numPeaks++;
 					peakDetected = true; /*to avoid double counting the same peak*/
 					if (DEBUG) console.log("Peak detected just before time " + data[i].t + ". Number of peaks: " + numPeaks);
+					if (DEBUG) console.log("Peak height: " + (local_max - y_current));
 				}
 			}
 			graph_is_rising = false;
