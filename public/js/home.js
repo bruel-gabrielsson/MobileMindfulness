@@ -86,6 +86,9 @@ function initializePage() {
 		}
 	});
 
+	var guidance = $('#guidanceCheckbox').length > 0;
+	var pageName = guidance ? 'guidance' : 'index';
+
 	$(".start-button").on("click", function(e) {
 		$contentPages.hide();
 		$('#active-finish-button').attr('disabled', true);
@@ -103,18 +106,26 @@ function initializePage() {
 		breathResults.populate.call(breathResults,data);
 	});
 
-	$(".home-button, .quit-button, .back-button").on("click", function(e) {
+	$(".home-button, .back-button").on("click", function(e) {
 		$contentPages.hide();
+		$("#start-page").show();
+	});
+
+	$(".quit-button").on("click", function(e) {
+		$contentPages.hide();
+		ga('send', 'event', 'quit_button', 'click', pageName);
 		$("#start-page").show();
 	});
 
 	$(".help-button").on("click", function(e) {
 		$contentPages.hide();
+		ga("send", "event", "help_button", "click", pageName);
 		$("#help-page").show();
 	});
 
 	$(".progress-button").on("click", function(e) {
 		$contentPages.hide();
+		ga('send', 'event', 'progress_button', 'click', pageName);
 		$("#progress-page").show();
 		breathProgress.updateSessions.call(breathProgress, false);
 	});
