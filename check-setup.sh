@@ -18,6 +18,14 @@ if [ "$system" == "Linux precise32 3.2.0-23-generic-pae #36-Ubuntu SMP Tue Apr 1
 then
   sys_vagrant="1"  
   echo "Running on Vagrant guest"
+
+  mongo_fix=$(grep "run_mongo" ~/.bash_profile | wc -l | xargs)
+
+  if [ $mongo_fix != "1" ]
+  then
+    echo "Adding automatic mongo start" 
+    echo -e ". ~/lab7/run_mongo.sh" >> ~/.bash_profile  
+  fi
   
   user=$(whoami)
   
