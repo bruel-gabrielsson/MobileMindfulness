@@ -113,8 +113,14 @@ function initializePage() {
 		breathResults.populate.call(breathResults,data);
 	});
 
-	$(".home-button, .quit-button, .back-button").on("click", function(e) {
+	$(".home-button, .back-button").on("click", function(e) {
 		$contentPages.hide();
+		$("#start-page").show();
+	});
+
+	$(".quit-button").on("click", function(e) {
+		$contentPages.hide();
+		ga('send', 'event', 'quit_button', 'click');
 		$("#start-page").show();
 	});
 
@@ -127,6 +133,7 @@ function initializePage() {
 
 	$(".progress-button").on("click", function(e) {
 		$contentPages.hide();
+		ga('send', 'event', 'progress_screen', 'opened');
 		$("#progress-page").show();
 		breathProgress.updateSessions.call(breathProgress, false);
 	});
