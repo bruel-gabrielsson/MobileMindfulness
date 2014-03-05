@@ -16,16 +16,6 @@ exports.save = function(User) {
 	return function(req, res) {
     	var form_data = req.body;
       console.log(form_data.guidance);
-
-      var newBreathingsession = new models.BreathingSession({
-        "date": new Date(),
-        "data": form_data.data,
-        "username": "TESTING",
-        "guidance": form_data.guidance
-      });
-
-      newBreathingsession.save(function(err) {if (err) {console.log(err)}});
-
 	    var username = req.session.username;
 	    if (username) {
 	    	User.find({ name: username }, function(error, result) {
@@ -42,7 +32,6 @@ exports.save = function(User) {
               "username": usr.name,
               "guidance": form_data.guidance
             });
-
             newBreathingsession.save(function(err) {if (err) {console.log(err)}});
 
             res.send(200);
