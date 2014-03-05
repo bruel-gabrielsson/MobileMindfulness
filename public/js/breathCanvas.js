@@ -16,9 +16,10 @@ BreathCanvas.prototype.init = function(color0, color1) {
 				c1 = 'rgb(' + color1[0] + ',' + color1[1] + ',' + color1[2] + ')';
 			
 			this.$controller.css('background', '-webkit-gradient(linear,left top,left bottom,from(' + c0 + '),to(' + c1 + '))');
+
+			this.$controller.addClass('active');
 			
 			this.reset();
-			this.showThumb();
 			this.started = false;
 			var to = null,
 				t = new Date().getTime();
@@ -76,15 +77,17 @@ BreathCanvas.prototype.bind = function(callback) {
 };
 
 BreathCanvas.prototype.showThumb = function() {
-	this.$controller.removeClass('active');
+	if (this.$instructions.hasClass('hidden'))
+		this.$controller.removeClass('active');
 };
 
 BreathCanvas.prototype.showInstructions = function() {
-	this.$instructions.show();
+	this.$instructions.removeClass('hidden');
 }
 
 BreathCanvas.prototype.hideInstructions = function() {
-	this.$instructions.hide();
+	this.$instructions.addClass('hidden');
+	this.showThumb();
 }
 
 BreathCanvas.prototype.notify = function(y) {
