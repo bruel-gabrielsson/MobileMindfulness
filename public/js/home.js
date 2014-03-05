@@ -56,8 +56,16 @@ function initializePage() {
 	});
 
 	breathResults.saveData(function(data) {
-		var json = {"data": data};
 		
+
+		var guide = $("#guidanceCheckbox");
+		var guidance = "false";
+		if (guide.length) {
+			guidance = "true";
+		}
+		
+		var json = {"data": data, "guidance": guidance};
+		console.log(json);
 		$.post('/breathingsession/new', json, function(response) {
 			$contentPages.hide();
 			$("#progress-page").show();
@@ -87,6 +95,8 @@ function initializePage() {
 	});
 
 	$(".start-button").on("click", function(e) {
+		// google analytics
+		ga("send", "event", "start", "click");
 		$contentPages.hide();
 		$('#active-finish-button').attr('disabled', true);
 		$("#active-page").show(0, function() {
@@ -109,6 +119,8 @@ function initializePage() {
 	});
 
 	$(".help-button").on("click", function(e) {
+		// google analytics
+		ga("send", "event", "help", "click");
 		$contentPages.hide();
 		$("#help-page").show();
 	});
@@ -117,6 +129,18 @@ function initializePage() {
 		$contentPages.hide();
 		$("#progress-page").show();
 		breathProgress.updateSessions.call(breathProgress, false);
+	});
+
+
+	// GOOGLE ANALYTICS
+	$("#confirmsignup").on("click", function() {
+		ga("send", "event", "register", "click");
+	});
+
+	$(".back-button").each(function() {
+		$(this).on("click", function() {
+			ga("send", "event", "back", "click");
+		});
 	});
 	
 	initHomeScreen();
