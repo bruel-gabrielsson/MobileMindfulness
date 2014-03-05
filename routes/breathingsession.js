@@ -29,7 +29,8 @@ exports.save = function(User) {
               "date": new Date(),
               "data": form_data.data,
               "_user": usr.id,
-              "username": usr.name
+              "username": usr.name, 
+              "guidance": form_data.guidance
             });
             newBreathingsession.save(function(err) {if (err) {console.log(err)}});
 
@@ -37,6 +38,14 @@ exports.save = function(User) {
 		      }
 		    });
 	    } else {
+        var newBreathingsession = new models.BreathingSession({
+                "date": new Date(),
+                "data": form_data.data,
+                "username": "TESTING",
+                "guidance": form_data.guidance
+              });
+        
+              newBreathingsession.save(function(err) {if (err) {console.log(err)}});
         res.json({message:'You have to be logged in to save your results.</br><a href="./">Register here!</a>'});
       }
 	};

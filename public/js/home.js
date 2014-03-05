@@ -56,7 +56,14 @@ function initializePage() {
 	});
 
 	breathResults.saveData(function(data) {
-		var json = {"data": data};
+		var guide = $("#guidanceCheckbox");
+ 		var guidance = "false";
+ 		if (guide.length) {
+ 			guidance = "true";
+ 		}
+ 		
+ 		var json = {"data": data, "guidance": guidance};
+ 		console.log(json);
 		
 		$.post('/breathingsession/new', json, function(response) {
 			$contentPages.hide();
