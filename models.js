@@ -5,8 +5,7 @@ var breathingSchema = new Mongoose.Schema({
     date: Date,
     data: Object,
     _user: { type: Mongoose.Schema.ObjectId, ref: 'User' },
-    username: String,
-    guidance: String
+    username: String
   });
 
 exports.BreathingSession = Mongoose.model('BreathingSession', breathingSchema);
