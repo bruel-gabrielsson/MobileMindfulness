@@ -103,18 +103,26 @@ function initializePage() {
 		breathResults.populate.call(breathResults,data);
 	});
 
-	$(".home-button, .quit-button, .back-button").on("click", function(e) {
+	$(".home-button, .back-button").on("click", function(e) {
 		$contentPages.hide();
+		$("#start-page").show();
+	});
+
+	$(".quit-button").on("click", function(e) {
+		$contentPages.hide();
+		ga('send', 'event', 'quit_button', 'click');
 		$("#start-page").show();
 	});
 
 	$(".help-button").on("click", function(e) {
 		$contentPages.hide();
+		ga("send", "event", "help_button", "click");
 		$("#help-page").show();
 	});
 
 	$(".progress-button").on("click", function(e) {
 		$contentPages.hide();
+		ga('send', 'event', 'progress_button', 'click');
 		$("#progress-page").show();
 		breathProgress.updateSessions.call(breathProgress, false);
 	});
