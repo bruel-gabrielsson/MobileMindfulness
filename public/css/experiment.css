@@ -1,0 +1,45 @@
+.expGraph {
+	background: #111;
+	overflow-y: hidden;
+	overflow-x: auto;
+	margin-bottom: 10px;
+}
+
+.expGraph::-webkit-scrollbar { 
+    display: none; 
+}
+
+label {
+	position: absolute;
+	top: 5px;
+	font-weight: normal;
+}
+
+label:not(:first-child):not(:last-child) {
+	margin-left: -18px;
+}
+
+#loading{
+	text-align: center;
+	display: none;
+	position: absolute;
+	width: 132px;
+	left: 50%;
+	margin-left: -66px;
+	z-index: 10;
+}
+
+.loading-overlay {
+	display: none;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0, 0, 0, 0.8);
+	z-index: 9;
+}
+
+#indexSessions {
+	margin-bottom: 75px;
+}
