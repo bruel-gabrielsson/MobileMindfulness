@@ -28,4 +28,8 @@ function initializePage() {
 	breathExperiment.init(historyLimit*2,resultLineColor,lineWidth);
 
 	breathExperiment.updateSessions.call(breathExperiment);
+
+	$('#experiment-update-button').click(function() {
+		breathExperiment.updateSessions.call(breathExperiment);
+	});
 }

@@ -22,7 +22,7 @@ label:not(:first-child):not(:last-child) {
 #loading{
 	text-align: center;
 	display: none;
-	position: absolute;
+	position: fixed;
 	width: 132px;
 	left: 50%;
 	margin-left: -66px;
@@ -31,7 +31,7 @@ label:not(:first-child):not(:last-child) {
 
 .loading-overlay {
 	display: none;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	bottom: 0;
 	left: 0;
