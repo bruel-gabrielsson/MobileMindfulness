@@ -46,6 +46,9 @@
 	bottom: 0;
 }
 
+#instructions.hidden {
+	display: none;
+}
 
 #breathGraph {
 	position: absolute;

@@ -56,16 +56,15 @@ function initializePage() {
 	});
 
 	breathResults.saveData(function(data) {
-		
-
 		var guide = $("#guidanceCheckbox");
-		var guidance = "false";
-		if (guide.length) {
-			guidance = "true";
-		}
+ 		var guidance = "false";
+ 		if (guide.length) {
+ 			guidance = "true";
+ 		}
+ 		
+ 		var json = {"data": data, "guidance": guidance};
+ 		console.log(json);
 		
-		var json = {"data": data, "guidance": guidance};
-		console.log(json);
 		$.post('/breathingsession/new', json, function(response) {
 			$contentPages.hide();
 			$("#progress-page").show();
@@ -94,9 +93,10 @@ function initializePage() {
 		}
 	});
 
+	var guidance = $('#guidanceCheckbox').length > 0;
+	var pageName = guidance ? 'guidance' : 'index';
+
 	$(".start-button").on("click", function(e) {
-		// google analytics
-		ga("send", "event", "start", "click");
 		$contentPages.hide();
 		$('#active-finish-button').attr('disabled', true);
 		$("#active-page").show(0, function() {
@@ -120,34 +120,21 @@ function initializePage() {
 
 	$(".quit-button").on("click", function(e) {
 		$contentPages.hide();
-		ga('send', 'event', 'quit_button', 'click');
+		ga('send', 'event', 'quit_button', 'click', pageName);
 		$("#start-page").show();
 	});
 
 	$(".help-button").on("click", function(e) {
-		// google analytics
-		ga("send", "event", "help", "click");
 		$contentPages.hide();
+		ga("send", "event", "help_button", "click", pageName);
 		$("#help-page").show();
 	});
 
 	$(".progress-button").on("click", function(e) {
 		$contentPages.hide();
-		ga('send', 'event', 'progress_screen', 'opened');
+		ga('send', 'event', 'progress_button', 'click', pageName);
 		$("#progress-page").show();
 		breathProgress.updateSessions.call(breathProgress, false);
-	});
-
-
-	// GOOGLE ANALYTICS
-	$("#confirmsignup").on("click", function() {
-		ga("send", "event", "register", "click");
-	});
-
-	$(".back-button").each(function() {
-		$(this).on("click", function() {
-			ga("send", "event", "back", "click");
-		});
 	});
 	
 	initHomeScreen();
