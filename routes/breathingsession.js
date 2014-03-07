@@ -27,6 +27,7 @@ exports.save = function(User) {
       newBreathingsession.save(function(err) {if (err) {console.log(err)}});
 
 	    var username = req.session.username;
+
 	    if (username) {
 	    	User.find({ name: username }, function(error, result) {
 		      if (error) res.redirect('/');
@@ -39,8 +40,7 @@ exports.save = function(User) {
               "date": new Date(),
               "data": form_data.data,
               "_user": usr.id,
-              "username": usr.name,
-              "guidance": form_data.guidance
+              "username": usr.name
             });
 
             newBreathingsession.save(function(err) {if (err) {console.log(err)}});
