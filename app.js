@@ -106,6 +106,7 @@ db.once('open', function callback () {
   
   app.post('/breathingsession/new', breathingsession.save(User));
   app.get('/breathingsession/history', breathingsession.history(User));
+  app.get('/experiment', breathingsession.experiment(User));
 
 });
 
