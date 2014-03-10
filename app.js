@@ -48,8 +48,8 @@ if ('development' == app.get('env')) {
 }
 
 // Add routes here
-app.get('/index', index.view);
-app.get('/guidance', index.viewGuidance);
+app.get('/index', index.viewGuidance);
+app.get('/guidance', index.viewGuidance); // Keep this url if someone has it cached
 app.get('/experiment', experiment.view);
 app.get('/', login.view);
 
