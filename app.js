@@ -14,6 +14,7 @@ handlebars.partialsDir = "views/partials/";
 var index = require('./routes/index');
 var login = require('./routes/login');
 var user = require('./routes/user');
+var experiment = require('./routes/experiment');
 var breathingsession = require('./routes/breathingsession');
 // Example route
 // var user = require('./routes/user');
@@ -47,8 +48,9 @@ if ('development' == app.get('env')) {
 }
 
 // Add routes here
-app.get('/index', index.view);
-app.get('/guidance', index.viewGuidance);
+app.get('/index', index.viewGuidance);
+app.get('/guidance', index.viewGuidance); // Keep this url if someone has it cached
+app.get('/experiment', experiment.view);
 app.get('/', login.view);
 
 // LOGIN
@@ -106,6 +108,7 @@ db.once('open', function callback () {
   
   app.post('/breathingsession/new', breathingsession.save(User));
   app.get('/breathingsession/history', breathingsession.history(User));
+  app.get('/breathingsession/experiment', breathingsession.experiment(User));
 
 });
 

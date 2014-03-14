@@ -1,5 +1,28 @@
 var models = require('../models');
 
+exports.experiment = function(User) {
+  return function(req, res) {
+
+    var data = {};
+    
+    models.BreathingSession.find({guidance: "true"}).exec(function(error, result) {
+      if (error) res.redirect('/');
+        data.guidance = result;
+
+        models.BreathingSession.find({guidance: "false"}).exec(function(error, result) {
+        if (error) res.redirect('/');
+          data.index = result;
+
+          returnData();
+        });
+    });    
+
+    var returnData = function() {
+      res.json(data);
+    }
+  };
+}
+
 exports.list = function(User){
   return function(req, res) {
 

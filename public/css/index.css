@@ -22,6 +22,16 @@ h2 {
 	font-size: 25px;
 }
 
+h2.mainTitle {
+	font-family: 'Righteous';
+	text-transform: lowercase;
+	color: #0092cf;
+}
+
+	h2.mainTitle span {
+		color: white;
+	}
+
 .bottom-buttons {
 	position: fixed;
 	background: black;

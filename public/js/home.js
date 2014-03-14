@@ -57,10 +57,7 @@ function initializePage() {
 
 	breathResults.saveData(function(data) {
 		var guide = $("#guidanceCheckbox");
- 		var guidance = "false";
- 		if (guide.length) {
- 			guidance = "true";
- 		}
+ 		var guidance = guide.length > 0 ? "true" : "false";
  		
  		var json = {"data": data, "guidance": guidance};
  		console.log(json);
