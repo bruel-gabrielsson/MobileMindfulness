@@ -211,6 +211,8 @@ BreathProgress.prototype.drawGraph = function(ctx, data, fullWidth, canvasHeight
 	var startTime = data[0].date;
 	var endTime = data[length-1].date;
 	var dayMs = 24*60*60*1000;
+	endTime = Math.ceil(endTime/dayMs)*dayMs;
+	startTime = Math.ceil(startTime/dayMs)*dayMs;
 	var step = Math.floor(dayLimit/4) * dayMs;
 	for (var ms = startTime; ms <= endTime; ms += dayMs) {
 		var $label = $('<label>');
