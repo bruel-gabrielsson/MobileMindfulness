@@ -101,7 +101,7 @@ db.once('open', function callback () {
 
   app.get('/user_login', user.login(User));
   app.get('/user_logout', user.logout);
-  app.get('/users', user.list(User));
+  //app.get('/users', user.list(User));
   app.get('/user_register', user.register(User));
   
   app.post('/breathingsession/new', breathingsession.save(User));
